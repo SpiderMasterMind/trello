@@ -1,0 +1,19 @@
+include _mixins 
+doctype html 
+html
+	head
+		title Application!
+		+stylesheet_link_tag("style")
+		//link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bungee+Shade")
+		+javascript_include_tag("vendor/all")
+		+javascript_include_tag("handlebars_templates")
+
+	block content
+
+	+javascript_include_tag("application")
+	//+javascript_include_tag("models/todo")
+	+javascript_include_tag("collections/coll")
+	+javascript_include_tag("views/view")
+	script(type="text/javascript").
+		App.items = new Collection(!{JSON.stringify(items)});	
+		App.init();
