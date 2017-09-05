@@ -8,3 +8,28 @@ body {
 a {
   color: #00B7FF;
 }
+
+h2 {
+	font-size: 1.5em;
+}
+
+h3 {
+	color: dodgerblue;
+}
+
+.list {
+	display: inline-block;
+	color: white;
+	background-color: black;
+	border: 1px solid white;
+}
+
+.card {
+	border: 1px solid white;
+	border-left: 10px solid white;
+}
+
+.comments {
+	border: 1px dotted white;
+	border-left: 8px solid white;
+}
