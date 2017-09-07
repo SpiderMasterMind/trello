@@ -1,29 +1,40 @@
 var App = {
 	templates: JST,
 	init: function() {
-		new View({
-			el: 'main',
-			collection: this.board,
-		});
 	
+		this.renderBoard();
+		this.renderLists();
 		this.bindEvents();
 	},
 	bindEvents: function() {
-		$("#test_add_list").on("click", this.testPost.bind(this));
+		_.extend(this, Backbone.Events);		
+		this.on("renderLists", this.renderLists.bind(this));
+		//$("#test_add_list").on("click", this.testPost.bind(this));
 	},
-	testPost: function(event) {
-		event.preventDefault();
-		// this.board is a collection of list models
-		var name = $("#test_add_list").prev().val();
-		
-		// sends POST
-		this.board.create({	heading: name }, {
-			success: function() {
-				new View({
-					el: 'main',
-					collection: this.board,
-				});
-			}.bind(this)
+	renderBoard: function() {
+		new Board({
+			el: '#add_list',
+			collection: this.board,
 		});
-	}, 
+	},
+	renderLists: function() {
+		//debugger;
+		if (this.lists) { this.lists.forEach(function(list) { list.undelegateEvents(); } ); }
+		$("#list_area").empty();
+
+		var lists = this.board;
+		this.lists = lists.map(function(list) {
+			var item = new List({
+				model: list
+			});
+			return item;
+		});
+		this.lists.forEach(function(listView) {
+			$("#list_area").append(listView.el);
+		});
+		
+		// for each list render a list view.
+		//collection: this.board,
+	},
+
 }
