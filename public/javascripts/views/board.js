@@ -2,33 +2,46 @@ var Board = Backbone.View.extend({
 	template: App.templates.board,
 	initialize: function() {
 		this.render();
-		//App.trigger("renderLists");
+		this.bindEvents();
 	},
 	render: function() {
-		this.$el.html(this.template({}));
-		//	testCollection: this.collection.toJSON()
-		//}));
+			this.$el.html(this.template({}));
+			this.renderAllLists(); // now can just re order the collection to change the list
+		//}
+	},
+	bindEvents: function() {
+		this.collection.on("update", this.render.bind(this))
 	},
 	events: {
-		"click #test_add_list": "newList"
+		"click #test_add_list": "createList"
 	},
-	newList: function(event) {
-		this.testPost(event);
+	renderList: function(id) {
 	},
-	testPost: function(event) {
+	renderAllLists: function() {
+		if (this.lists) {
+			this.lists.forEach(function(list) { list.undelegateEvents(); } )
+		}
+
+		$("#lists_area").empty();		
+		this.lists = this.collection.map(function(list) { // this.lists is an array of list el, which can be reordered as needed
+			var item = new List({
+				model: list
+			});
+			return item;
+		});
+		this.lists.forEach(function(listView) {
+			$("#lists_area").append(listView.el);
+		});
+	},
+	createList: function(event) {
 		event.preventDefault();
-		// this.board is a collection of list models
-		var name = $("#test_add_list").prev().val();
-		
-		// sends POST
-		this.collection.create({ heading: name }, {
+		var name = $("#test_add_list").prev().val(); // gets the textarea value of my input
+
+		this.collection.create({
+			heading: name
+		}, {
 			success: function() {
-				(App.trigger("renderLists"));
-			//	new View({
-			//		el: 'main',
-			//		collection: this.board,
-			//	});
-			//}.bind(this)
+				this.render.bind(this);
 			}
 		});
 	}, 

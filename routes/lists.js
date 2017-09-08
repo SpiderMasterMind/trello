@@ -22,6 +22,18 @@ module.exports = function(router) {
 		data.incrementLastId();
 		res.json(response_body);
 	});
+
+	router.patch('/lists/:id', function(req, res, next) {
+		var id = req.params.id;
+		var property = Object.keys(req.body)[0];
+		var value = req.body[property];
+		console.log(id, property, value);
+
+		//data.editList(id, property, value);
+		res.status(204).end();
+
+
+	});
 }
 
 
