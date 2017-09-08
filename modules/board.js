@@ -2,15 +2,15 @@ var express = require('express');
 var router = express.Router();
 var path = require("path");
 var fs = require("fs");
-var filePath = path.resolve(path.dirname(__dirname), "data/example.json");
+var filePath = path.resolve(path.dirname(__dirname), "data/board.json");
 var router = express.Router();
+var _ = require("underscore");
 
 module.exports = {
 	get: function() {
 		return JSON.parse(fs.readFileSync(filePath, 'utf8'));
 	},
 	getLists: function() {
-		// this could be extended to iterate through lists. (further work!)
 		return this.get()[0].data;
 	},
 	lastId: function() {
@@ -20,13 +20,37 @@ module.exports = {
 		var allData = this.get();
 		var lists = this.getLists();
 		lists.push(list);
+		
 		allData[0].data = lists;
 		this.save(allData[0]);
 	},
 	incrementLastId: function() {
-		var json = this.get()[0];
-		json.lastID = Number(json.lastID) + 1;
-		this.save(json);
+		var board = this.get()[0];
+		board.lastID = Number(board.lastID) + 1;
+		this.save(board);
+	},
+	editList: function(id, property, value) {
+		var allData = this.get();		
+		var allLists = this.getLists();
+		var list = _.find(allLists, { listId: Number(id) });
+		var index = allLists.indexOf(list);
+
+		list[property] = value;
+		allLists[index] = list;
+
+		allData[0].data = allLists;
+		this.save(allData[0]);
+	},
+	deleteList: function(id) {
+		var allData = this.get();		
+		var allLists = this.getLists();
+		var list = _.find(allLists, { listId: Number(id) });
+		var index = allLists.indexOf(list);
+		
+		allLists.splice(index, 1);
+
+		allData[0].data = allLists;
+		this.save(allData[0])
 	},
 	save: function(json) {
 		fs.writeFileSync(filePath, JSON.stringify([json]), 'utf8')

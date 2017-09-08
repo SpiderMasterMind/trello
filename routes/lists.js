@@ -27,12 +27,15 @@ module.exports = function(router) {
 		var id = req.params.id;
 		var property = Object.keys(req.body)[0];
 		var value = req.body[property];
-		console.log(id, property, value);
 
-		//data.editList(id, property, value);
+		data.editList(id, property, value);
 		res.status(204).end();
+	});
 
-
+	router.delete('/lists/:id', function(req, res, next) {
+		var id = req.params.id;
+		data.deleteList(id)
+		res.status(204).end();
 	});
 }
 

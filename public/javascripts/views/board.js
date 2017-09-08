@@ -10,12 +10,10 @@ var Board = Backbone.View.extend({
 		//}
 	},
 	bindEvents: function() {
-		this.collection.on("update", this.render.bind(this))
+		this.collection.on("destroy", this.render.bind(this))
 	},
 	events: {
 		"click #test_add_list": "createList"
-	},
-	renderList: function(id) {
 	},
 	renderAllLists: function() {
 		if (this.lists) {
@@ -40,9 +38,7 @@ var Board = Backbone.View.extend({
 		this.collection.create({
 			heading: name
 		}, {
-			success: function() {
-				this.render.bind(this);
-			}
+			success: this.render.bind(this)
 		});
 	}, 
 });
