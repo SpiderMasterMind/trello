@@ -1,5 +1,6 @@
 var Board = Backbone.View.extend({
 	template: App.templates.board,
+	addListTemplate: App.templates.addList,
 	initialize: function() {
 		this.render();
 		this.bindEvents();
@@ -30,6 +31,8 @@ var Board = Backbone.View.extend({
 		this.lists.forEach(function(listView) {
 			$("#lists_area").append(listView.el);
 		});
+
+		$("#lists_area").append(this.addListTemplate({}))
 	},
 	createList: function(event) {
 		event.preventDefault();

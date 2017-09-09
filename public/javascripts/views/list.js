@@ -10,7 +10,8 @@ var List = Backbone.View.extend({
 	render: function() {
 		this.$el.html(this.template({
 			heading: this.model.get("heading"),
-			subscribed: this.model.get("subscribed")
+			subscribed: this.model.get("subscribed"),
+			cards: this.model.get("cards"),
 		}));
 		return this;
 	},

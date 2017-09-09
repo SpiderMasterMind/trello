@@ -13,7 +13,7 @@ html
 	+javascript_include_tag("application")
 	+javascript_include_tag("models/board", "models/list")
 	+javascript_include_tag("collections/lists")
-	+javascript_include_tag("views/board", "views/list")
+	+javascript_include_tag("views/board", "views/list", "views/header", "views/infobar")
 	script(type="text/javascript").
 		App.lists = new Lists(!{JSON.stringify(allItems)});	
 		App.init();

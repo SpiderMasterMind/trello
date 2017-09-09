@@ -1,27 +1,215 @@
 @import url("whitespace_reset.css");
 
+html {
+	color: #4d4d4d;
+	font: 14px "Helvetica Neue", Arial, Helvetica, sans-serif;
+	line-height: 18px;
+/*	overflow: auto; */
+}
+
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	background-color: rgb(0, 121, 191);
+	/*overflow: auto; */
+	
+
 }
 
-a {
-  color: #00B7FF;
+main {
+	width: 100%;
+	height: 600px;
+	white-space: nowrap;
+	margin-top: 90px;
 }
 
-h2 {
-	font-size: 1.5em;
+#lists_area {
 }
 
-h3 {
-	color: dodgerblue;
+#add_list {
+	display: inline-block;
+}
+
+header,
+#infobar {
+	position: fixed
+}
+
+header {
+	top: 0;
+	background-color: #016BA6;
+	width: 100%;
+	height: 40px;
+}
+
+
+#infobar {
+	top: 40px;
+	height: 46px;
+	background-color: rgb(0, 121, 191);
+}
+
+.boards-ctrl {
+	float: right;
+	margin-right: 5px;
+	margin-top: 5px;
+}
+
+.header_logo {
+	float: right;
+	margin-right: 450px;
+}
+
+.header {
+	display: inline-block;
+}
+
+.boards_button {
+	text-align: right;
+	font-weight: 700;
+	line-height: 30px;
+	height: 30px;
+	width: 100px;
+	background-color: rgb(60,141, 185);
+	border-radius: 3px;
+	margin-right: 10px;
+}
+
+.boards_button img {
+	position: absolute;
+	left: 5px;
+}
+
+
+.boards_button span,
+.boards_button a {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.boards_button a {
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+}
+
+.header.header_search {
+	background-color: rgb(60,141, 185);
+	height: 30px;	
+	border-radius: 3px;
+}
+
+header input {
+	margin: 3px;
+  background-color: rgb(60, 141, 185);
+  border: 0px solid;
+}
+
+.header.header_search input[type=text]{
+	font-size: 13px;
+	height: 20px;
+	box-shadow: none;
+}
+
+.header.header_search input[type=text]:focus{
+	background-color: white;
+	outline: none;
+	font-size: 13px;
+	height: 20px;
+	box-shadow: none;
+}
+
+
+.notif_button {
+	background-color: #20c2e0;
+	display: inline-block;
+	height: 30px;
+	width: 30px;
+	border-radius: 3px;
+}
+
+.notif_button > img {
+	margin-top: 3px;
+	margin-left: 2px;
 }
 
 .list {
 	display: inline-block;
-	color: white;
-	background-color: black;
-	border: 1px solid white;
+  min-width: 270px;
+	max-width: 280px;
+	color: rgb(77, 77, 77);
+	background-color: rgb(226, 228, 230);
+	margin-left: 10px;
+	border-radius: 3px;
+	vertical-align: top;
+}
+
+.heading_text {
+	color: rgb(77, 77, 77);
+	overflow: auto;
+	font: 14px "Helvetica Neue", Arial, Helvetica, sans-serif;
+	font-weight: 700;	
+	width: 216px;
+	height: 24px;
+	display: inline-block;
+	background-color: rgb(226, 228, 230);
+	border: none;
+	border-radius: 3px;
+	box-shadow: none;
+	outline: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+	resize: none;
+	padding: 3px 5px;
+	min-height: 18px;
+	margin: 3px 4px;
+}
+
+.heading_text:focus {
+	background-color: white;
+}
+
+.list_extras {
+	float: right;
+	margin-right: 5px;
+	margin-top: 5px;
+	border-radius: 3px;
+	line-height: 14px;
+}
+
+.list_extras:hover {
+	background-color: rgb(196, 201, 204);
+}
+
+.list_extras a {
+	width: 26px;
+	height: 26px;
+	text-decoration: none;
+}
+
+.list_extras a span {
+	display: inline-block;
+	width: 26px;
+	height: 26px;
+	color: rgb(140, 140, 140);	
+}
+
+.card_add a {
+	text-decoration: none;
+}
+
+.card_add a span {
+	color: rgb(140, 140, 140);
+}
+
+.card_add:hover {
+	background-color: rgb(196, 201, 204);
+}
+
+.card_add a:hover {
+	text-decoration: underline;
+}
+
+.card_add a span:hover {
+	color: rgb(77, 77, 77);
 }
 
 .card {
