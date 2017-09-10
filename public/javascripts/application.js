@@ -3,6 +3,7 @@ var App = {
 	init: function() {
 // could reset the last ID if collection is empty?	
 // something in a notification if server comms fails
+
 		this.renderHeader();
 		this.renderInfobar();
 		this.renderBoard();

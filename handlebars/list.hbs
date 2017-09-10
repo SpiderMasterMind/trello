@@ -1,28 +1,56 @@
-	<textarea class="heading_text">{{heading}}</textarea>
+	<textarea class="heading_text" onclick="this.focus();this.select()">{{heading}}</textarea>
 	<div class="list_extras">
 		<a href="#">
 			<span>...</span>
 		</a>
 	</div>
-	{{#each cards}}	
-	<div class="card" data-cardid="{{cardId}}">
-		<ul>
-			<li>{{label}}</li>
-			<li>CARD Description: {{description}}</li>
-			<li>CARD Due: {{due}}</li>
-		</ul>
-		<!--<h3>Comments</h3>
-			{{#each comments}}
-			<div class="comments">
-				<ul>
-					<li>{{this}}</li>
-				</ul>
+
+
+	<div class="cards_area">
+
+		{{#each cards}}	
+		<div class="card" data-cardid="{{cardId}}">
+
+			<div class="card_content">
+				<h4>{{label}}</h4>
+				{{#if subscribed}}
+					<span class="icon-subscribe">isSubbed</span>
+				{{/if}}
+				{{#if due}}
+					<span class="due_date">isDue</span>
+				{{/if}}
+				{{#if description}}
+					<span class="list_description">hasDesc</span>
+				{{/if}}
+				{{#if comments}}
+					<span class="comments_num">hasComms</span>
+				{{/if}}
 			</div>
-			{{/each}}-->
-	</div>
-	{{/each}}	
+
+		</div>
+		{{/each}}	
+
+	</div>	
+
+
+
+
 	<div class="card_add">
-		<a href="#">
-			<span>Add a card...</span>
-		</a>
+		<div class="card_add_activate">
+			<a href="#">
+				<span>Add a card...</span>
+			</a>
+		</div>
+	</div>
+	<div class="card_add_popup">
+		<div class="card_add_text">
+			<textarea></textarea>
+		</div>
+		<div class="card_add_ctrls">
+			<input class="submit_card_add" type="submit" value="Add" />
+			<a class="cancel_card_add" href="#">X</a>
+			<div class="card_add_optns">
+				<span>...</span>
+			</div>
+		</div>
 	</div>

@@ -19,29 +19,35 @@ this["JST"]["infobar"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":f
 this["JST"]["list"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "		<div class=\"card\" data-cardid=\""
+  return "			<div class=\"card\" data-cardid=\""
     + alias4(((helper = (helper = helpers.cardId || (depth0 != null ? depth0.cardId : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"cardId","hash":{},"data":data}) : helper)))
-    + "\">		<ul>			<li>"
+    + "\">			<div class=\"card_content\">				<h4>"
     + alias4(((helper = (helper = helpers.label || (depth0 != null ? depth0.label : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"label","hash":{},"data":data}) : helper)))
-    + "</li>			<li>CARD Description: "
-    + alias4(((helper = (helper = helpers.description || (depth0 != null ? depth0.description : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"description","hash":{},"data":data}) : helper)))
-    + "</li>			<li>CARD Due: "
-    + alias4(((helper = (helper = helpers.due || (depth0 != null ? depth0.due : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"due","hash":{},"data":data}) : helper)))
-    + "</li>		</ul>		<!--<h3>Comments</h3>			"
-    + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.comments : depth0),{"name":"each","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "-->	</div>	";
+    + "</h4>				"
+    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.subscribed : depth0),{"name":"if","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "				"
+    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.due : depth0),{"name":"if","hash":{},"fn":container.program(4, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "				"
+    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.description : depth0),{"name":"if","hash":{},"fn":container.program(6, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "				"
+    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.comments : depth0),{"name":"if","hash":{},"fn":container.program(8, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "			</div>		</div>		";
 },"2":function(container,depth0,helpers,partials,data) {
-    return "			<div class=\"comments\">				<ul>					<li>"
-    + container.escapeExpression(container.lambda(depth0, depth0))
-    + "</li>				</ul>			</div>			";
+    return "					<span class=\"icon-subscribe\">isSubbed</span>				";
+},"4":function(container,depth0,helpers,partials,data) {
+    return "					<span class=\"due_date\">isDue</span>				";
+},"6":function(container,depth0,helpers,partials,data) {
+    return "					<span class=\"list_description\">hasDesc</span>				";
+},"8":function(container,depth0,helpers,partials,data) {
+    return "					<span class=\"comments_num\">hasComms</span>				";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {});
 
-  return "	<textarea class=\"heading_text\">"
+  return "	<textarea class=\"heading_text\" onclick=\"this.focus();this.select()\">"
     + container.escapeExpression(((helper = (helper = helpers.heading || (depth0 != null ? depth0.heading : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"heading","hash":{},"data":data}) : helper)))
-    + "</textarea>	<div class=\"list_extras\">		<a href=\"#\">			<span>...</span>		</a>	</div>	"
+    + "</textarea>	<div class=\"list_extras\">		<a href=\"#\">			<span>...</span>		</a>	</div>	<div class=\"cards_area\">		"
     + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.cards : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "		<div class=\"card_add\">		<a href=\"#\">			<span>Add a card...</span>		</a>	</div>";
+    + "		</div>		<div class=\"card_add\">		<div class=\"card_add_activate\">			<a href=\"#\">				<span>Add a card...</span>			</a>		</div>	</div>	<div class=\"card_add_popup\">		<div class=\"card_add_text\">			<textarea></textarea>		</div>		<div class=\"card_add_ctrls\">			<input class=\"submit_card_add\" type=\"submit\" value=\"Add\" />			<a class=\"cancel_card_add\" href=\"#\">X</a>			<div class=\"card_add_optns\">				<span>...</span>			</div>		</div>	</div>";
 },"useData":true});
 
 this["JST"]["view"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {

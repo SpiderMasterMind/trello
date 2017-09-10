@@ -144,7 +144,7 @@ header input {
 
 .heading_text {
 	color: rgb(77, 77, 77);
-	overflow: auto;
+	overflow: hidden;
 	font: 14px "Helvetica Neue", Arial, Helvetica, sans-serif;
 	font-weight: 700;	
 	width: 216px;
@@ -158,21 +158,32 @@ header input {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
 	resize: none;
-	padding: 3px 5px;
+	padding: 0px 5px;
 	min-height: 18px;
-	margin: 3px 4px;
+	max-height: 28px;
+	margin: 5px 5px;
+	line-height: 23px;
+	overflow-x: hidden;
+  overflow-y: auto;
+	cursor: pointer;
 }
 
 .heading_text:focus {
 	background-color: white;
+	cursor: text;
 }
 
 .list_extras {
+	box-sizing: border-box;
 	float: right;
+	border-radius: 3px;
 	margin-right: 5px;
 	margin-top: 5px;
 	border-radius: 3px;
-	line-height: 14px;
+	line-height: 13.5px;
+	width: 25px;
+	height: 25px;
+	cursor: pointer;
 }
 
 .list_extras:hover {
@@ -180,16 +191,29 @@ header input {
 }
 
 .list_extras a {
-	width: 26px;
-	height: 26px;
 	text-decoration: none;
 }
 
 .list_extras a span {
 	display: inline-block;
-	width: 26px;
-	height: 26px;
 	color: rgb(140, 140, 140);	
+	padding: 2px 0 0 7px;
+}
+
+.list_extras a span:focus,
+.list_extras a:focus {
+	color: black;
+}
+
+
+.cards_area {
+	padding: 0 4px 0 4px;
+	margin: 0 4px 0 4px;
+}
+
+.card_add {
+	padding: 8px 0;
+	cursor: pointer;
 }
 
 .card_add a {
@@ -202,19 +226,154 @@ header input {
 
 .card_add:hover {
 	background-color: rgb(196, 201, 204);
+	border-bottom-right-radius: 3px;
+	border-bottom-left-radius: 3px;
+	margin: 0;
+	padding-left: 8px;
 }
 
-.card_add a:hover {
-	text-decoration: underline;
-}
+/* back color: rgb(
+ * radius none, none
+* padding: 8px 0
+margin: 0 8px
 
-.card_add a span:hover {
-	color: rgb(77, 77, 77);
-}
-
+*/
 .card {
-	border: 1px solid white;
-	border-left: 10px solid white;
+	background-color: white;
+	border-radius: 3px;
+}
+
+.card_content {
+	box-sizing: border-box;
+	padding: 6px 6px 2px 8px;
+	margin-bottom: 8px;
+	border-bottom: 1px solid rgb(204, 204,204);
+}
+
+.card_content h4 {
+	margin-bottom: 4px;
+}
+
+/* popup displays */
+
+
+.card_add_activate {
+/*	display: none; */
+}
+
+
+
+
+
+.card_add {
+	box-sizing: border-box;
+	margin: 0 8px;
+}
+
+.card_add_activate {
+	margin-left: 10px;
+}
+
+.card_add_text {
+	box-sizing: border-box;
+	padding: 6px 6px 2px 8px;
+	background-color: white;
+	border-radius: 3px;
+}
+
+.card_add_text textarea {
+	color: rgb(77, 77, 77);
+	background-color: white;	
+	overflow: none;
+	font: 14px "Helvetica Neue", Arial, Helvetica, sans-serif;
+	font-weight: 700;	
+	width: 98%;
+	height: 54px;
+	display: inline-block;
+	border: none;
+	border-radius: 3px;
+	box-shadow: none;
+	outline: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+	/*resize: none;*/
+
+
+}
+
+.card_add_popup {
+	display: none; 
+	box-sizing: border-box;
+	margin: 0 8px 8px 8px;
+}
+
+.card_add_ctrls {
+	margin-top: 8px;
+}
+
+.card_add_ctrls input[type=submit] {
+	box-sizing: border-box;
+	outline: none;
+	background: linear-gradient(to bottom,#61bd4f,#5AAC44 100%);
+	box-shadow: 0 1px 0 #3F6F21;
+	border: none;
+	border-radius: 3px;
+	color: white;
+	font-weight: bold;
+	font: 14px "Helvetica Neue", Arial, Helvetica, sans-serif;
+	width: 60px;
+	height: 32px;
+	padding: 4px 16px;
+}
+
+.card_add_ctrls input[type=submit]:hover {
+	background: linear-gradient(to bottom, #5AAC44, #519839 100%);
+}
+
+.card_add_ctrls input[type=submit]:active {
+	background: linear-gradient(to bottom, #519839, #49852E 100%);
+}
+
+
+.cancel_card_add {
+	position: relative;
+	top: 3px;
+	left: 7px;
+	font-size: 22px;
+	color: rgb(153, 153, 153);
+	text-decoration: none;	
+}
+
+.cancel_card_add:hover {
+	color: rgb(77,77,77);
+}
+
+.card_add_optns {
+	position: relative;
+	box-sizing: border-box;
+	margin-top: 2px;
+	padding-left: 5px;
+	height: 30px;
+	width: 30px;
+	line-height: 16px;
+	display: inline-block;
+	float: right;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+
+.card_add_optns span {
+	font-size: 24px;
+	color: rgb(153,153,153);	
+}
+
+.card_add_optns:hover {
+	background-color: rgb(196,201,204);
+}
+
+.card_add_optns span:hover {
+	color: rgb(77,77,77);	
 }
 
 .comments {
