@@ -12,8 +12,7 @@ var App = {
 	},
 	bindEvents: function() {
 		_.extend(this, Backbone.Events);		
-		//this.on("renderLists", this.renderLists.bind(this));
-		//$("#test_add_list").on("click", this.testPost.bind(this));
+		this.on("renderLists", this.renderBoard.bind(this));
 	},
 	renderInfobar: function() {
 		if (this.infobar) { this.infobar.undelegateEvents(); }
@@ -31,6 +30,7 @@ var App = {
 		});
 	},
 	renderBoard: function() {
+		console.log("app rendering board");
 		if (this.board) { this.board.undelegateEvents(); }
 
 		this.board = new Board({

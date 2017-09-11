@@ -23,6 +23,17 @@ module.exports = function(router) {
 		res.json(response_body);
 	});
 
+	router.post('/lists/:id', function(req, res, next) {
+		var id = req.params.id;
+		var heading = req.body.heading;
+		// the response should contain an entity which describes the status of the request and refers to the new resource, and a Location header (see section 14.30)
+		console.log(id, heading);
+		data.createCard(id, heading);
+		res.status(204).end();
+
+	});
+
+
 	router.patch('/lists/:id', function(req, res, next) {
 		var id = req.params.id;
 		var property = Object.keys(req.body)[0];

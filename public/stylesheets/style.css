@@ -208,12 +208,16 @@ header input {
 
 .cards_area {
 	padding: 0 4px 0 4px;
-	margin: 0 4px 0 4px;
+	margin: 0 4px 0 4px; 
 }
 
 .card_add {
-	padding: 8px 0;
+	box-sizing: border-box;	
+	padding: 8px 0 8px 8px;
+	margin: 0;
 	cursor: pointer;
+	border-bottom-right-radius: 3px;
+	border-bottom-left-radius: 3px;
 }
 
 .card_add a {
@@ -224,13 +228,13 @@ header input {
 	color: rgb(140, 140, 140);
 }
 
-.card_add:hover {
-	background-color: rgb(196, 201, 204);
+/*.card_add:hover {
+/*	background-color: rgb(196, 201, 204);
 	border-bottom-right-radius: 3px;
 	border-bottom-left-radius: 3px;
 	margin: 0;
-	padding-left: 8px;
-}
+	padding-left: 8px; 
+} */
 
 /* back color: rgb(
  * radius none, none
@@ -238,6 +242,11 @@ header input {
 margin: 0 8px
 
 */
+
+.card_add_activate {
+	margin-left: 10px;
+}
+
 .card {
 	background-color: white;
 	border-radius: 3px;
@@ -261,22 +270,10 @@ margin: 0 8px
 /*	display: none; */
 }
 
-
-
-
-
-.card_add {
-	box-sizing: border-box;
-	margin: 0 8px;
-}
-
-.card_add_activate {
-	margin-left: 10px;
-}
-
 .card_add_text {
 	box-sizing: border-box;
 	padding: 6px 6px 2px 8px;
+	margin-right: 8px;
 	background-color: white;
 	border-radius: 3px;
 }
@@ -284,8 +281,8 @@ margin: 0 8px
 .card_add_text textarea {
 	color: rgb(77, 77, 77);
 	background-color: white;	
-	overflow: none;
 	font: 14px "Helvetica Neue", Arial, Helvetica, sans-serif;
+	line-height: initial;
 	font-weight: 700;	
 	width: 98%;
 	height: 54px;
@@ -302,13 +299,13 @@ margin: 0 8px
 }
 
 .card_add_popup {
-	display: none; 
+/*	display: none;  */
 	box-sizing: border-box;
 	margin: 0 8px 8px 8px;
 }
 
 .card_add_ctrls {
-	margin-top: 8px;
+	margin: 8px 8px 0 0;
 }
 
 .card_add_ctrls input[type=submit] {

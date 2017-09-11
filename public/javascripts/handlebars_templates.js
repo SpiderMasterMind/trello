@@ -1,5 +1,9 @@
 this["JST"] = this["JST"] || {};
 
+this["JST"]["addCardPopup"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    return "	<div class=\"card_add_text\">		<textarea></textarea>	</div>	<div class=\"card_add_ctrls\">		<input class=\"submit_card_add\" type=\"submit\" value=\"Add\" />		<a class=\"cancel_card_add\" href=\"#\">X</a>		<div class=\"card_add_optns\">			<span>...</span>		</div>	</div>";
+},"useData":true});
+
 this["JST"]["addList"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     return "<div id=\"add_list\">	<p>Add List:</p>	<input type=\"text\" name=\"new\" placeholder\"List name\" />	<input type=\"submit\" value=\"Submit\" id=\"test_add_list\" /></div>";
 },"useData":true});
@@ -47,7 +51,7 @@ this["JST"]["list"] = Handlebars.template({"1":function(container,depth0,helpers
     + container.escapeExpression(((helper = (helper = helpers.heading || (depth0 != null ? depth0.heading : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"heading","hash":{},"data":data}) : helper)))
     + "</textarea>	<div class=\"list_extras\">		<a href=\"#\">			<span>...</span>		</a>	</div>	<div class=\"cards_area\">		"
     + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.cards : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "		</div>		<div class=\"card_add\">		<div class=\"card_add_activate\">			<a href=\"#\">				<span>Add a card...</span>			</a>		</div>	</div>	<div class=\"card_add_popup\">		<div class=\"card_add_text\">			<textarea></textarea>		</div>		<div class=\"card_add_ctrls\">			<input class=\"submit_card_add\" type=\"submit\" value=\"Add\" />			<a class=\"cancel_card_add\" href=\"#\">X</a>			<div class=\"card_add_optns\">				<span>...</span>			</div>		</div>	</div>";
+    + "		</div>		<div class=\"card_add\">		<div class=\"card_add_activate\">			<a href=\"#\">				<span>Add a card...</span>			</a>		</div>	</div>";
 },"useData":true});
 
 this["JST"]["view"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {

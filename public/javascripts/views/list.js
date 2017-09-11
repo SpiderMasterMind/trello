@@ -1,12 +1,26 @@
-var List = Backbone.View.extend({
+var ListView = Backbone.View.extend({
+	template: App.templates.list,
+	className: 'list',
 	initialize: function() {
-		this.el.id = this.model.get("listId");
-		// set the backbone model id, so save doesnt think its a new model
+		this.el.id = this.model.get("listId");				// set the backbone model id, so save doesnt think its a new model
 		this.model.set("id", this.model.get("listId"));
 		this.render();
+
+
+
+		// moved to board view
+		//this.listenTo(App, "renderList", this.respondToListRender);
+	
+
+		this.cards = new Cards(									// creates new collection of cards with card models, so a list view contains a cards collection
+			this.model.toJSON().cards.map(function(card) { return new Card(card);	}), { listId: this.el.id } 
+		);
 	},
-	className: 'list',
-	template: App.templates.list,
+	respondToListRender: function(listId) {			// only renders itself if App.trigger("renderList" singular, arg = listId is put in place
+		if (this.el.id === listId) {
+			this.render();
+		}
+	},
 	render: function() {
 		this.$el.html(this.template({
 			heading: this.model.get("heading"),
@@ -22,47 +36,51 @@ var List = Backbone.View.extend({
 		"mouseout .card_add": "removeHighlightAddCard",
 		"mouseover .card_add_optns": "highlightAddOptns",
 		"mouseout .card_add_optns": "removeHighlightAddOptns",
-		"click .card_add": "addCardPopup",
-		"click .cancel_card_add": "removeCardPopup",
-		"click": "removePopup",
+		"click .card_add": "renderAddCardPopup",
 
 		"click ul:contains('subscribed')": "toggleSubscribed",
 		// "click list heading edit desc button": "editHeading" - untested
 		"click a#delete": "deleteList",
 	},
-	removePopup: function(event) {
-		console.log(event.target);
-		debugger;
-		// if teh popup is active, and the closest class is card_add_popup call removeCardPopup
-		if (!$(event.target).closest('.card_add_popup').length) {
-			console.log("!");
-			this.removeCardPopup();
-		}
+	renderAddCardPopup: function() {
+		if (this.addCardPopup) { this.addCardPopup.undelegateEvents() }
+
+		this.$(".card_add_activate").hide();
+		$(this.$el).off("click", ".card_add"); // temporarily unbinds this method as it prevents the textarea from working 
+		this.addCardPopup = new AddCardPopup({
+			collection: this.cards,
+			el: this.$(".card_add"),
+		},{
+			listId: this.el.id						// passing the listId, means we know which list to render on popup cancel or submission
+		});
+		this.removeHighlightAddCard();  // prevents highlighting on initial popup mouseover
 	},
 	removeHighlightAddCard: function(event) {
-		this.$(".card_add a").css("text-decoration", "none");
-		this.$(".card_add a span").css("color", "rgb(140,140,140)");
+		this.$(".card_add").css("background-color", "rgb(226, 228, 230)");
+		this.$(".card_add a span").css({
+			"text-decoration": "none",
+			"color": "rgb(140,140,140)"
+		});
 	},
 	highlightAddCard: function(event) {
-		this.$(".card_add a span").css("color", "rgb(77,77,77)");
-		this.$(".card_add a").css({
-			"text-decoration": "underline",
-			"text-decoration-color": "rgb(77,77,77)"
-		});
+		console.log("pea");
+		if (!this.addCardPopup) {
+			console.log("no popup highlight css enabled");
+			this.$(".card_add").css({
+				"background-color": "rgb(196, 201, 204)",
+			});
+			this.$(".card_add a span").css("color", "rgb(77,77,77)");
+			this.$(".card_add a span").css({
+				"text-decoration": "underline",
+				"text-decoration-color": "rgb(77,77,77)"
+			});
+		}
 	},
 	highlightAddOptns: function() {
 		this.$(".card_add_optns span").css("color", "rgb(77,77,77)");
 	},
 	removeHighlightAddOptns: function() {
 		this.$(".card_add_optns span").css("color", "rgb(153,153,153)");
-	},
-	addCardPopup: function() {
-		this.$(".card_add").hide();
-		this.$(".card_add_popup").show();
-	},
-	removeCardPopup: function() {
-		this.$(".card_add").show();
-		this.$(".card_add_popup").hide();
 	},
 	enterKeyPress: function(event) {
 		if (event.keyCode === 13) {
@@ -71,7 +89,7 @@ var List = Backbone.View.extend({
 		}
 	},
 	updateHeading: function(event) {
-		// only update if its different?
+		// TODO only update if its different?
 		this.model.save({
 			heading: $(event.target).val()
 		},{

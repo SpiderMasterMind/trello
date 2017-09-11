@@ -4,16 +4,15 @@ html
 	head
 		title Application!
 		+stylesheet_link_tag("style")
-		//link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bungee+Shade")
 		+javascript_include_tag("vendor/all")
 		+javascript_include_tag("handlebars_templates")
 
 	block content
 
 	+javascript_include_tag("application")
-	+javascript_include_tag("models/board", "models/list")
-	+javascript_include_tag("collections/lists")
-	+javascript_include_tag("views/board", "views/list", "views/header", "views/infobar")
+	+javascript_include_tag("models/board", "models/list", "models/card")
+	+javascript_include_tag("collections/lists", "collections/cards")
+	+javascript_include_tag("views/board", "views/list", "views/header", "views/infobar", "views/addCardPopup")
 	script(type="text/javascript").
 		App.lists = new Lists(!{JSON.stringify(allItems)});	
 		App.init();

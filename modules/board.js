@@ -52,6 +52,27 @@ module.exports = {
 		allData[0].data = allLists;
 		this.save(allData[0])
 	},
+	createCard: function(id, heading) {
+		var allLists = this.getLists();
+		console.log(id, heading);
+		console.log("!!!!!!!!!!!!!!!!!!!!!!!!");
+		console.log(allLists);
+		var list = _.find(allLists, {listId: Number(id)})
+		console.log(list.cards);
+		// returns the format, do we need metadata, or just a max comments function
+		// [ { cardId: 0,
+   // label: 'The first card!',
+   // subscribed: true,
+   // description: 'card description',
+   // due: 'date string goes here',
+   // comments: [ 'comment 1', 'comment 2', 'comment 3' ] },
+  // cardId: 1,
+   // label: 'The second card!',
+   // subscribed: true,
+   // description: 'card description',
+   // due: 'date string goes here',
+   // comments: [ 'comment 1', 'comment 2', 'comment 3' ] } ]
+	},
 	save: function(json) {
 		fs.writeFileSync(filePath, JSON.stringify([json]), 'utf8')
 	},
