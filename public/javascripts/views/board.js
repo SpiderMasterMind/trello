@@ -29,12 +29,15 @@ var Board = Backbone.View.extend({
 			});
 			return item;
 		});
+
 		this.lists.forEach(function(listView) {
 			$("#lists_area").append(listView.el);
 		});
 
-		$("#lists_area").append(this.addListTemplate({}))
+		$("#lists_area").append(this.addListTemplate({}));
 
+
+		this.lists.forEach(function(listView) { listView.trigger("renderCardViews"); }); // tells list to render its cards so DOM is ready });
 
 		// individual card render after list render
 		//this.lists.forEach(function(listView) { listView.renderCards() } )

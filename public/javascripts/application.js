@@ -7,6 +7,8 @@ var App = {
 // list add popup problem, cant change heading afterwards
 		// fix add card popup success callback not addingmodel to collection
 		// list heading focus/list heading the same validation
+		// vertical scrollbars in .list_area
+		// add card enter key for textarea
 
 		this.renderHeader();
 		this.renderInfobar();

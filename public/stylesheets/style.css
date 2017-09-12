@@ -263,6 +263,10 @@ margin: 0 8px
 	margin-bottom: 4px;
 }
 
+.card_content:hover {
+	background-color: rgb(237,239,240);
+}
+
 /* popup displays */
 
 
@@ -377,3 +381,6 @@ margin: 0 8px
 	border: 1px dotted white;
 	border-left: 8px solid white;
 }
+
+
+

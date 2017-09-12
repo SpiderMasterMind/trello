@@ -8,12 +8,15 @@ var ListView = Backbone.View.extend({
 			this.model.toJSON().cards.map(function(card) { return new Card(card);	}), { listId: this.el.id } 
 		);
 		this.render();
+//		this.on("renderCardViews", function() { this.renderCardViews(); });
 	},
 	render: function() {
 		if (this.addCardPopup) { this.addCardPopup.undelegateEvents() }
 		
-		this.renderList()
+		this.renderList();
+		this.renderCardViews();
 		return this;
+		
 	},
 	events: {
 		"blur .heading_text": "updateHeading",
@@ -31,8 +34,17 @@ var ListView = Backbone.View.extend({
 		this.$el.html(this.template({
 			heading: this.model.get("heading"),
 			subscribed: this.model.get("subscribed"),
-			cards: this.cards.toJSON(),
 		}));
+	},
+	renderCardViews: function() {
+		// rendering a card requries:
+		this.cardViews = this.cards.map(function(card) { 
+			var cardView = new CardView({
+				model: card, 
+			});
+			return cardView;
+		});
+		this.cardViews.forEach(function(cardView) { this.$(".cards_area").append(cardView.el) }.bind(this));
 	},
 	renderAddCardPopup: function(event) {
 		event.stopPropagation();
@@ -62,19 +74,9 @@ var ListView = Backbone.View.extend({
 		this.undelegateEvents();
 		this.render();	
 		this.delegateEvents();
+		this.trigger("renderCardViews");
 		this.renderAddCardPopup(event);
 	},
-
-
-
-
-
-
-
-
-
-
-
 	removeHighlightAddCard: function(event) {
 		this.$(".card_add").css("background-color", "rgb(226, 228, 230)");
 		this.$(".card_add a span").css({
@@ -110,9 +112,11 @@ var ListView = Backbone.View.extend({
 			heading: $(event.target).val()
 		},{
 			patch: true,
-			wait: true,
 			success: this.render.bind(this)
 		});
+	},
+	listHeadingUpdate: function() {
+		this.render();
 	},
 	deleteList: function(event) {
 		event.preventDefault();
