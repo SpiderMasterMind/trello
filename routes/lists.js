@@ -25,11 +25,21 @@ module.exports = function(router) {
 
 	router.post('/lists/:id', function(req, res, next) {
 		var id = req.params.id;
-		var heading = req.body.heading;
-		// the response should contain an entity which describes the status of the request and refers to the new resource, and a Location header (see section 14.30)
-		console.log(id, heading);
-		data.createCard(id, heading);
-		res.status(204).end();
+		var label = req.body.label;
+		//console.log(id, heading, data.getNewCardId(id));
+	
+		var response_body = {
+			"cardId": data.getNewCardId(id),
+			"label": label,
+			"subscribed": false,
+			"description": "",
+			"due": "",
+			"comments": [],
+		};
+		
+	//	console.log(response_body);
+		data.createCard(id, response_body);
+		res.status(200).end();
 
 	});
 

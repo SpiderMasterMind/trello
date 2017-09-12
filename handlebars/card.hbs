@@ -1,0 +1,20 @@
+{{#each cards}}	
+<div class="card" data-cardid="{{cardId}}">
+
+	<div class="card_content">
+		<h4>{{label}}</h4>
+		{{#if subscribed}}
+			<span class="icon-subscribe">isSubbed</span>
+		{{/if}}
+		{{#if due}}
+			<span class="due_date">isDue</span>
+		{{/if}}
+		{{#if description}}
+			<span class="list_description">hasDesc</span>
+		{{/if}}
+		{{#if comments}}
+			<span class="comments_num">hasComms</span>
+		{{/if}}
+	</div>
+</div>
+{{/each}}	

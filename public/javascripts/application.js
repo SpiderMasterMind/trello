@@ -3,6 +3,10 @@ var App = {
 	init: function() {
 // could reset the last ID if collection is empty?	
 // something in a notification if server comms fails
+// replace X button with image form site
+// list add popup problem, cant change heading afterwards
+		// fix add card popup success callback not addingmodel to collection
+		// list heading focus/list heading the same validation
 
 		this.renderHeader();
 		this.renderInfobar();
@@ -30,7 +34,6 @@ var App = {
 		});
 	},
 	renderBoard: function() {
-		console.log("app rendering board");
 		if (this.board) { this.board.undelegateEvents(); }
 
 		this.board = new Board({

@@ -4,34 +4,20 @@ var ListView = Backbone.View.extend({
 	initialize: function() {
 		this.el.id = this.model.get("listId");				// set the backbone model id, so save doesnt think its a new model
 		this.model.set("id", this.model.get("listId"));
-		this.render();
-
-
-
-		// moved to board view
-		//this.listenTo(App, "renderList", this.respondToListRender);
-	
-
 		this.cards = new Cards(									// creates new collection of cards with card models, so a list view contains a cards collection
 			this.model.toJSON().cards.map(function(card) { return new Card(card);	}), { listId: this.el.id } 
 		);
-	},
-	respondToListRender: function(listId) {			// only renders itself if App.trigger("renderList" singular, arg = listId is put in place
-		if (this.el.id === listId) {
-			this.render();
-		}
+		this.render();
 	},
 	render: function() {
-		this.$el.html(this.template({
-			heading: this.model.get("heading"),
-			subscribed: this.model.get("subscribed"),
-			cards: this.model.get("cards"),
-		}));
+		if (this.addCardPopup) { this.addCardPopup.undelegateEvents() }
+		
+		this.renderList()
 		return this;
 	},
 	events: {
 		"blur .heading_text": "updateHeading",
-		"keypress .heading_text": "enterKeyPress",
+		"keypress .heading_text": "detectEnterKeyPress",
 		"mouseover .card_add": "highlightAddCard",
 		"mouseout .card_add": "removeHighlightAddCard",
 		"mouseover .card_add_optns": "highlightAddOptns",
@@ -39,22 +25,56 @@ var ListView = Backbone.View.extend({
 		"click .card_add": "renderAddCardPopup",
 
 		"click ul:contains('subscribed')": "toggleSubscribed",
-		// "click list heading edit desc button": "editHeading" - untested
 		"click a#delete": "deleteList",
 	},
-	renderAddCardPopup: function() {
-		if (this.addCardPopup) { this.addCardPopup.undelegateEvents() }
+	renderList: function() {
+		this.$el.html(this.template({
+			heading: this.model.get("heading"),
+			subscribed: this.model.get("subscribed"),
+			cards: this.cards.toJSON(),
+		}));
+	},
+	renderAddCardPopup: function(event) {
+		event.stopPropagation();
+		event.preventDefault();
 
-		this.$(".card_add_activate").hide();
 		$(this.$el).off("click", ".card_add"); // temporarily unbinds this method as it prevents the textarea from working 
 		this.addCardPopup = new AddCardPopup({
 			collection: this.cards,
 			el: this.$(".card_add"),
 		},{
-			listId: this.el.id						// passing the listId, means we know which list to render on popup cancel or submission
+			listId: this.el.id,						// passing the listId, means we know which list to render on popup cancel or submission
+			thisView: this,			
 		});
 		this.removeHighlightAddCard();  // prevents highlighting on initial popup mouseover
+
+		this.listenTo(this.addCardPopup, "cardAddSuccess", function() { this.submitSuccessful() });
+		this.listenTo(this.addCardPopup, "popupClosed", function() { this.popupClosed() });
 	},
+	popupClosed: function() {
+		this.stopListening();		
+		this.undelegateEvents();		
+		this.addCardPopup = undefined;		
+		this.delegateEvents();		
+	},
+	submitSuccessful:function() { 
+		this.stopListening();
+		this.undelegateEvents();
+		this.render();	
+		this.delegateEvents();
+		this.renderAddCardPopup(event);
+	},
+
+
+
+
+
+
+
+
+
+
+
 	removeHighlightAddCard: function(event) {
 		this.$(".card_add").css("background-color", "rgb(226, 228, 230)");
 		this.$(".card_add a span").css({
@@ -63,16 +83,12 @@ var ListView = Backbone.View.extend({
 		});
 	},
 	highlightAddCard: function(event) {
-		console.log("pea");
 		if (!this.addCardPopup) {
-			console.log("no popup highlight css enabled");
-			this.$(".card_add").css({
-				"background-color": "rgb(196, 201, 204)",
-			});
-			this.$(".card_add a span").css("color", "rgb(77,77,77)");
+			this.$(".card_add").css("background-color", "rgb(196, 201, 204)");
 			this.$(".card_add a span").css({
+				"color": "rgb(77,77,77)",
 				"text-decoration": "underline",
-				"text-decoration-color": "rgb(77,77,77)"
+				"text-decoration-color": "rgb(77,77,77)",
 			});
 		}
 	},
@@ -82,7 +98,7 @@ var ListView = Backbone.View.extend({
 	removeHighlightAddOptns: function() {
 		this.$(".card_add_optns span").css("color", "rgb(153,153,153)");
 	},
-	enterKeyPress: function(event) {
+	detectEnterKeyPress: function(event) {
 		if (event.keyCode === 13) {
 			event.preventDefault();			
 			this.$(".heading_text").blur();
@@ -113,22 +129,10 @@ var ListView = Backbone.View.extend({
 		var toggledState = !this.model.get("subscribed")
 		this.model.save({
 			subscribed: toggledState
-			},{
+		},{
 				patch: true,
 				wait: true,
 				success: this.render.bind(this),
-			});
-	},
-	editHeading: function(event) {
-		event.preventDefault()
-		var heading;
-		this.model.save({
-			heading: heading
-			},{ 
-				patch: true,
-				wait: true,
-				success: this.render.bind(this),
-			}
-		);
+		});
 	},
 });
