@@ -20,7 +20,7 @@ var ListView = Backbone.View.extend({
 	},
 	events: {
 		"blur .heading_text": "updateHeading",
-		"keypress .heading_text": "detectEnterKeyPress",
+		"keypress .heading_text": "headingEditOnEnter",
 		"mouseover .card_add": "highlightAddCard",
 		"mouseout .card_add": "removeHighlightAddCard",
 		"mouseover .card_add_optns": "highlightAddOptns",
@@ -103,6 +103,11 @@ var ListView = Backbone.View.extend({
 	detectEnterKeyPress: function(event) {
 		if (event.keyCode === 13) {
 			event.preventDefault();			
+			return true;
+		}
+	},
+	headingEditOnEnter: function(event) {
+		if (this.detectEnterKeyPress(event)) {
 			this.$(".heading_text").blur();
 		}
 	},

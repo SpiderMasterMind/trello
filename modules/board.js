@@ -55,7 +55,8 @@ module.exports = {
 	getNewCardId: function(listId) {
 		var allLists = this.getLists();
 		var list = _.find(allLists, {listId: Number(listId)})
-		return _.max(list.cards, function(card){ return card.cardId; }).cardId + 1;
+		var result = _.max(list.cards, function(card){ return card.cardId; }).cardId + 1;
+		if (result === null) { return 0 } else { return result };
 	},
 	createCard: function(id, cardJSON) {
 		var allData = this.get();

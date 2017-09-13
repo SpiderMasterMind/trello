@@ -1,17 +1,15 @@
-<div class="card_content" style="position:relative;">
+<div class="card_edit_modal">
+
 	<div class="labels_area"><!--
 		{{#if colors}}
 			{{#each colors}}
 				--><div class="color_block" style="background-color:{{this}};"></div><!--
 			{{/each}}
 		{{/if}}
-	</div><!--
-	--><div class="title_area">
-		<h4>{{label}}</h4>
-		<div class="pencil_box"><img src="images/list_pencil.png" alt="pencil_icon" /></div>
-	</div>
+	--></div>
 
-	{{#if icons}}
+	<textarea>{{label}}</textarea>
+
 		<div class="card_icons">
 			{{#if subscribed}}
 				<div class="is_subscribed"><img src="images/card_subscribe.png" alt="subscribed" /></div>
@@ -26,5 +24,6 @@
 				<div class="comments_number"><img src="images/card_comments.png" alt="comments_icon" /><span>{{comments}}</span></div>
 			{{/if}}
 		</div>
-	{{/if}}
+
+	<input type="submit" value="Save" />
 </div>

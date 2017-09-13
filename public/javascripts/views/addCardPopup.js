@@ -4,13 +4,13 @@ var AddCardPopup = Backbone.View.extend({
 		this.$activate = this.$(".card_add_activate");
 		this.options = options;
 		this.render();
-		this.bindEvents();
+		this.setupOutsideClickListener();
 	},
 	render: function() {
 		this.$activate.hide();
 		$(this.template()).insertAfter(this.$activate)
 	},
-	bindEvents: function() {
+	setupOutsideClickListener: function() {
 		$('html').on("click", function() {
 			if (!$(event.target).closest(this.el).length) {
 					this.closeThis();
@@ -19,7 +19,14 @@ var AddCardPopup = Backbone.View.extend({
 	},
 	events: {
 		"click .cancel_card_add": "closeThis",
+		"keypress": "detectEnterKeyPress",
 		"click .submit_card_add": "addCardToList",
+	},
+	detectEnterKeyPress: function(event) {
+		if (event.keyCode === 13) {
+			event.preventDefault();			
+			this.addCardToList(event);
+		}
 	},
 	addCardToList: function(event) {
 		event.preventDefault();

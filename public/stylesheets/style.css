@@ -254,13 +254,48 @@ margin: 0 8px
 
 .card_content {
 	box-sizing: border-box;
-	padding: 6px 6px 2px 8px;
+	padding: 7px 6px 6px 8px;
 	margin-bottom: 8px;
 	border-bottom: 1px solid rgb(204, 204,204);
+	border-radius: 3px;
 }
 
+.title_area {
+	margin-top: 2px;
+}
+
+.pencil_box {
+	display: none;
+	border-radius: 2px;
+	position: absolute;
+	right: 3px;
+	padding: 3px 2.5px 2.5px 1.5px;
+	background-color: rgb(237,239,240);	
+}
+
+.pencil_box:hover:after {
+	content: "";
+	position:absolute;
+	top:0;
+	left:0;
+	bottom:0;
+	right:0;
+	background-color: rgba(0,0,0,0.1);
+	border-radius: 2px;
+}
+
+.color_block {
+	display: inline-block;
+	width: 42px;
+	height: 8px;
+	margin-right: 3px;
+	border-radius: 2px;
+}
+
+
+
 .card_content h4 {
-	margin-bottom: 4px;
+	margin-bottom: 2px;
 }
 
 .card_content:hover {
@@ -297,9 +332,6 @@ margin: 0 8px
 	outline: none;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
-	/*resize: none;*/
-
-
 }
 
 .card_add_popup {
@@ -312,7 +344,7 @@ margin: 0 8px
 	margin: 8px 8px 0 0;
 }
 
-.card_add_ctrls input[type=submit] {
+input[type=submit] {
 	box-sizing: border-box;
 	outline: none;
 	background: linear-gradient(to bottom,#61bd4f,#5AAC44 100%);
@@ -327,11 +359,11 @@ margin: 0 8px
 	padding: 4px 16px;
 }
 
-.card_add_ctrls input[type=submit]:hover {
+input[type=submit]:hover {
 	background: linear-gradient(to bottom, #5AAC44, #519839 100%);
 }
 
-.card_add_ctrls input[type=submit]:active {
+input[type=submit]:active {
 	background: linear-gradient(to bottom, #519839, #49852E 100%);
 }
 
@@ -382,5 +414,104 @@ margin: 0 8px
 	border-left: 8px solid white;
 }
 
+.card_icons {
+	display: inline-block;
+	width: 100%;
+}
+
+.card_icons span {
+	color: rgb(156,156,156);
+	font-size: 0.8em;
+}
+
+.is_subscribed,
+.due_date, 
+.has_description,
+.comments_number {
+	display: inline-block;
+}
 
 
+.comments_number {
+	position: relative;
+	bottom: 3px;
+}
+
+.has_description {
+	position: relative;
+	bottom: 2px;
+}
+
+.due_date {
+	box-sizing: border-box;
+	height: 28px;
+	padding-right: 2px;
+}
+
+.date_red {
+	background-color: red;
+	color: white;
+	margin-right: 2px;
+	border-radius: 2px;
+}
+
+.date_red span {
+	color: white;
+}
+
+.due_date span {
+}
+
+.date_box {
+	position: relative;
+	bottom: 5px;
+	display: inline-block;
+}
+
+/* Card Edit Popup Styles */
+
+.card_edit_popup {
+	z-index: 5;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0,0,0,0.5);
+}
+
+.card_edit_modal {
+	z-index: 10;
+	position: fixed;
+	background-color: white;
+	box-sizing: border-box;
+	padding: 6px 6px 2px 8px;
+	width: 254px;
+	height: 151px;
+	border-radius: 3px;
+}
+
+.card_edit_modal input[type=submit] {
+	transform: translate(-8px, 16px);
+	width: 82px;
+	padding: 0px 33px 0 27px;
+}
+
+.card_edit_modal textarea {
+	color: rgb(77, 77, 77);
+	background-color: white;	
+	font: 14px "Helvetica Neue", Arial, Helvetica, sans-serif;
+	line-height: initial;
+	font-weight: 700;	
+	width: 98%;
+	height: 90px;
+	margin-bottom: 4px;
+	display: inline-block;
+	border: none;
+	border-radius: 3px;
+	box-shadow: none;
+	outline: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+	resize: none;
+}
