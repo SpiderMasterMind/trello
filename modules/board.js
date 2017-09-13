@@ -29,10 +29,10 @@ module.exports = {
 		board.lastID = Number(board.lastID) + 1;
 		this.save(board);
 	},
-	editList: function(id, property, value) {
+	editList: function(listId, property, value) {
 		var allData = this.get();		
 		var allLists = this.getLists();
-		var list = _.find(allLists, { listId: Number(id) });
+		var list = _.find(allLists, { listId: Number(listId) });
 		var index = allLists.indexOf(list);
 
 		list[property] = value;
@@ -41,10 +41,10 @@ module.exports = {
 		allData[0].data = allLists;
 		this.save(allData[0]);
 	},
-	deleteList: function(id) {
+	deleteList: function(listId) {
 		var allData = this.get();		
 		var allLists = this.getLists();
-		var list = _.find(allLists, { listId: Number(id) });
+		var list = _.find(allLists, { listId: Number(listId) });
 		var index = allLists.indexOf(list);
 		
 		allLists.splice(index, 1);
@@ -58,18 +58,19 @@ module.exports = {
 		var result = _.max(list.cards, function(card){ return card.cardId; }).cardId + 1;
 		if (result === null) { return 0 } else { return result };
 	},
-	createCard: function(id, cardJSON) {
+	createCard: function(listId, cardJSON) {
 		var allData = this.get();
 		var allLists = this.getLists();
-		var list = _.find(allLists, {listId: Number(id)})
+		var list = _.find(allLists, {listId: Number(listId)})
 		list.cards.push(cardJSON);
-		//
-		//
 		var index = allLists.indexOf(list);
 		allLists[index] = list;
 		allData[0].data = allLists
 		console.log(allLists[index]);
 		this.save(allData[0]);
+	},
+	editCard: function() {
+
 	},
 	save: function(json) {
 		fs.writeFileSync(filePath, JSON.stringify([json]), 'utf8')

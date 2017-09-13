@@ -28,6 +28,30 @@ var CardEditPopupView = Backbone.View.extend({
 		this.positionModal();
 		this.setModalStyleOverrides();
 	},
+	events: {
+		"keypress": "detectEnterKeypress", 
+		"click input[type=submit]": "updateCardTitle",
+	},
+	detectEnterKeypess: function(event) {
+		if (event.keyCode === 13) {
+			event.preventDefault();			
+			this.updateCardTitle(event);
+		}
+	},
+	updateCardTitle: function(event) {
+		event.preventDefault();
+		var newTitle = this.$("textarea").val();
+		this.model.save({
+			heading: newTitle
+		},{
+			patch: true,
+		});
+		this.renderParentView();		
+	},
+	renderParentView: function() {
+		this.trigger("cardTitleUpdated");
+		this.closeThis();
+	},
 	setModalStyleOverrides: function() {
 		if (this.iconsRequired() && this.attrs.colors) {
 			return;
@@ -51,9 +75,7 @@ var CardEditPopupView = Backbone.View.extend({
 			return false;
 		}
 	},
-
 	closeThis: function() {
-		console.log("closing")
 		this.undelegateEvents();
 		this.$el.remove();
 	},

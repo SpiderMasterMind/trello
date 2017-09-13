@@ -12,7 +12,7 @@ html
 	+javascript_include_tag("application")
 	+javascript_include_tag("models/board", "models/list", "models/card")
 	+javascript_include_tag("collections/lists", "collections/cards")
-	+javascript_include_tag("views/board", "views/list", "views/header", "views/infobar", "views/addCardPopup", "views/card", "views/cardEditPopup")
+	+javascript_include_tag("views/board", "views/list", "views/header", "views/infobar", "views/addCardPopup", "views/card", "views/cardEditPopup", "views/cardModal")
 	script(type="text/javascript").
 		App.lists = new Lists(!{JSON.stringify(allItems)});	
 		App.init();

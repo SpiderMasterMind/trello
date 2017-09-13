@@ -23,13 +23,13 @@ module.exports = function(router) {
 		res.json(response_body);
 	});
 
-	router.post('/lists/:id', function(req, res, next) {
-		var id = req.params.id;
+	router.post('/lists/:listId', function(req, res, next) {
+		console.log("something from lists route");
+		var listId = req.params.listId;
 		var label = req.body.label;
-		//console.log(id, heading, data.getNewCardId(id));
 	
 		var response_body = {
-			"cardId": data.getNewCardId(id),
+			"cardId": data.getNewCardId(listId),
 			"label": label,
 			"subscribed": false,
 			"description": "",
@@ -37,25 +37,23 @@ module.exports = function(router) {
 			"comments": [],
 		};
 		
-	//	console.log(response_body);
-		data.createCard(id, response_body);
+		data.createCard(listId, response_body);
 		res.status(200).end();
-
 	});
 
 
-	router.patch('/lists/:id', function(req, res, next) {
-		var id = req.params.id;
+	router.patch('/lists/:listId', function(req, res, next) {
+		var listId = req.params.listId;
 		var property = Object.keys(req.body)[0];
 		var value = req.body[property];
 
-		data.editList(id, property, value);
+		data.editList(listId, property, value);
 		res.status(204).end();
 	});
 
-	router.delete('/lists/:id', function(req, res, next) {
-		var id = req.params.id;
-		data.deleteList(id)
+	router.delete('/lists/:listId', function(req, res, next) {
+		var listId = req.params.listId;
+		data.deleteList(listId)
 		res.status(204).end();
 	});
 }

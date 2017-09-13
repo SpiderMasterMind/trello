@@ -7,7 +7,10 @@ var CardView = Backbone.View.extend({
 		this.render();
 	},
 	render: function() {
-		this.$el.html(this.template({ //cards: this.model.toJSON() }));
+		console.log("rendering card panel");
+		if (this.cardEditPopup) { this.cardEditPopup.undelegateEvents(); }
+		
+		this.$el.html(this.template({
 			icons: this.iconsRequired(),
 			description: this.isDescriptionPresent(),
 			label: this.attrs.label,
@@ -18,15 +21,21 @@ var CardView = Backbone.View.extend({
 		}));
 		this.setLabelStylesOverrides();
 		
-
-
 		return this;
-
 	},
 	events: {
 		"mouseover .card_content": "showPencilIconClass",
 		"mouseout .card_content": "removePencilIconClass",
-		"click .pencil_box": "showCardEditPopup",
+		"click .pencil_box": "renderCardEditPopup",
+		"click .card_content": "renderCardModal",
+	},
+	renderCardModal: function(event) {
+		event.stopPropagation();
+		if (this.cardModal) { this.cardModal.undelegateEvents(); }
+
+		this.cardModal = new CardModalView({
+			model: this.model
+		});
 	},
 	setLabelStylesOverrides: function() {
 		if (!this.iconsRequired() && !this.attrs.colors) {
@@ -55,18 +64,12 @@ var CardView = Backbone.View.extend({
 	getCommentsNumber: function() {
 		if (this.attrs.comments && this.attrs.comments.length > 0) {
 			return this.attrs.comments.length;
-		} else { return false;
+		} else {
+			return false;
 		}
 	},
 
-
-
-	showCardEditPopup: function(event) {
-		console.log("position: ", this.$el.position() )
-		console.log("offset: ", this.$el.offset() )
-	//	console.log("scrollRight: ", this.$el.scrollRight() )
-	//	console.log("scrollTop: ", this.$el.scrollTop() )
-
+	renderCardEditPopup: function(event) {
 		event.stopPropagation();
 		if (this.cardEditPopup) { this.cardEditPopup.undelegateEvents(); }
 
@@ -74,6 +77,11 @@ var CardView = Backbone.View.extend({
 			model: this.model,
 			position: this.$el.offset(),
 		});
+
+		this.listenTo(this.cardEditPopup, "cardTitleUpdated", function() {this.render();});
+	},
+	processUpdate: function() {
+		 console.log("!"); this.render()
 	},
 	showPencilIconClass: function() {
 		this.$(".pencil_box").css("display", "block");

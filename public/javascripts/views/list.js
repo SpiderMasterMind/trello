@@ -4,11 +4,14 @@ var ListView = Backbone.View.extend({
 	initialize: function() {
 		this.el.id = this.model.get("listId");				// set the backbone model id, so save doesnt think its a new model
 		this.model.set("id", this.model.get("listId"));
-		this.cards = new Cards(									// creates new collection of cards with card models, so a list view contains a cards collection
-			this.model.toJSON().cards.map(function(card) { return new Card(card);	}), { listId: this.el.id } 
-		);
+//		this.cards = new Cards(									// creates new collection of cards with card models, so a list view contains a cards collection
+	//		this.model.toJSON().cards.map(function(card) { return new Card(card);	}), { listId: this.el.id } 
+	//	);
+
+		this.cards = new Cards(null, { listId: this.el.id });
+		//this.model.attributes.forEach(function(cardModel) { this.cards.add(cardModel) });
+		_.each(this.model.attributes.cards, function(card) { this.cards.add( new Card(card, {collection: this.cards})) }, this);
 		this.render();
-//		this.on("renderCardViews", function() { this.renderCardViews(); });
 	},
 	render: function() {
 		if (this.addCardPopup) { this.addCardPopup.undelegateEvents() }

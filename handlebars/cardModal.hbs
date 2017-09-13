@@ -1,0 +1,54 @@
+<div class="card_main_modal">
+	<div class="modal_heading">
+		<textarea class="modal_card_title"></textarea>
+		<p>in list<a href="#"></a></p>
+	</div>
+	<div class="modal_main">
+		<div class="add_description">
+			<div class="description_icon"><img src="" alt="desc_icon" /></div>
+			<a href="#">Edit the description...</a>
+			<input type="submit" value="Save" />	
+			<a class="cancel_card_add" href="#">X</a>
+		</div>
+		<div class="input_description">
+			<textarea></textarea>
+		</div>
+		<div class="edit_description">
+			<h3>Description</h3>
+			<a href="#">Edit</a>
+			<p class="description_text"></p>
+		</div>
+		<div class="add_comment_area">
+			<h3>Add Comment</h3>
+			<textarea></textarea>
+			<input type="submit" value="Save" class="comment_save"/>
+		</div>
+		<div class="activity_area">
+			<h3>Activity</h3>
+			<div class="comments_display_area">
+			{{#each comments}}
+				<h4>User</h4>
+				<div class="comment_box">
+					<p>Comment goes here</p>
+				</div>
+				<div class="comment_sub_text">
+					<p class="comment_detail>Date at Time - <a href="#">Edit</a> - <a href="#">Delete</a></p>
+				</div>
+			{{/each}}
+			</div>
+		</div>
+	</div>
+	<div class="modal_sidebar">
+		<div class="add_ctrls">
+			<a href="#"><span>Members</span></a>
+			<a href="#"><span>Labels</span></a>
+		</div>
+		<div class="actions_ctrls">
+			<a href="#"><span>Move</span></a>
+			<a href="#"><span>Copy</span></a>
+			<a href="#"><span>Subscribe</span></a>
+			<a href="#"><span>Archive</span></a>
+		</div>
+	</div>
+</div>
+
