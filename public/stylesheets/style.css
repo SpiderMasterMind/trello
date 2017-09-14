@@ -10,7 +10,7 @@ html {
 
 body {
 	background-color: rgb(0, 121, 191);
-	/*overflow: auto; */
+	overflow-y: hidden;
 }
 
 main {
@@ -42,7 +42,7 @@ header {
 
 #infobar {
 	top: 40px;
-	height: 46px;
+	height: 30px;
 	background-color: rgb(0, 121, 191);
 }
 
@@ -515,23 +515,80 @@ input[type=submit]:active {
 	resize: none;
 }
 
-.card_main_modal_layer {
-	z-index: 5;
-	position: fixed;
-	top: 0;
-	left: 0;
-	height: 100%;
-	width: 100%;
-	background-color: rgba(0,0,0,0.5);
+.cards_area {
+	overflow: scroll;
+	max-height: 400px;
 }
 
-.card_main_modal {
-	z-index: 10;
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -58%);
-	width: 700px;
-	height: 604px;
-	background-color: rgb(237,239,240);
+.list_actions_popup {
+	position: fixed; 
+	height: 300px;
+	width: 300px;
+	border: 1px solid rgb(195, 200, 203);
+	background-color: white;
+}
+
+.popup_wrapper {
+	padding: 8px;
+}
+
+.list_actions_popup .title {
+	text-align: center;
+	line-height: 20px;
+	height: 32px;
+}
+
+.list_actions_popup .title h2 {
+	font-size: 15px;
+	color: rgb(140,140,140);
+}
+
+.list_actions_popup .title a {
+	color: rgb(140,140,140);	
+	font-size: 17px;
+	text-decoration: none;
+	position: relative;
+	left: 130px;
+	bottom: 21px;
+}
+
+.list_actions_popup .title a:hover {
+	color: black;
+}
+
+.list_actions_popup hr {
+	color: rgb(214,218,220);	
+	border-top: 0px;
+	border-bottom: 1px solid;
+}
+
+
+.list_actions_popup .content li {
+	padding: 8px 0;
+}
+
+.list_actions_popup .content li > a {
+	display: block;
+	cursor: pointer;
+	font-weight: 700;
+	text-decoration: none;
+	color: #444;
+	background-color: transparent;
+}
+
+.list_actions_popup .content li > a:hover {
+	display: block;
+	cursor: pointer;
+	font-weight: 700;
+	text-decoration: none;
+	color: white;
+	background-color: #298FCA;
+}
+
+.list_actions_popup .content li:hover {
+	background-color: #298FCA;
+}
+
+.white_anchor_text {
+	color: white;
 }

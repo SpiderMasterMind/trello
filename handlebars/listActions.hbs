@@ -1,0 +1,33 @@
+<div class="popup_wrapper">
+	<div class="title">
+		<h2>List Actions</h2>
+		<a class="close" href="#">x</a>
+	</div>
+	<hr>
+	<div class="content">
+		<ul>
+			<li id="add"><a href="#">Add Card...</a></li>
+			<li id="copy"><a href="#">Copy List...</a></li>
+			<li id="move"><a href="#">Move List...</a></li>
+			<li id="subscribe"><a href="#">Subscribe</a></li>
+		</ul>
+			<hr>
+		<ul>
+			<li id="move_all"><a href="#">Move All Cards in This List...</a></li>
+			<li id="archive_all"><a href="#">Archive All Cards in This List...</a></li>
+		</ul>
+			<hr>
+		<ul>
+			<li id="archive_list"><a href="#">Archive This List</a></li>
+		</ul>
+	</div>
+	<div class="moving">
+		<div class="moving_box">
+			<span>Position</span>
+			<p>{{order}}</p>
+			<select>{{optionsCounter maxOrder order}}</select>
+		</div>
+		<input type="submit" value="Move" />
+	</div>
+</div>	
+			

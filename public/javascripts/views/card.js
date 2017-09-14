@@ -1,13 +1,14 @@
-// might need another rule for pencil override if there are labels
 var CardView = Backbone.View.extend({
 	className: 'card',
 	template: App.templates.card,
 	initialize: function() {
 		this.attrs = this.model.toJSON();		
 		this.render();
+		this.model.on("change update", this.render.bind(this));
 	},
 	render: function() {
-		console.log("rendering card panel");
+		// do we need to set attrs here? not very backbone
+		this.attrs = this.model.toJSON();
 		if (this.cardEditPopup) { this.cardEditPopup.undelegateEvents(); }
 		
 		this.$el.html(this.template({
@@ -78,8 +79,12 @@ var CardView = Backbone.View.extend({
 			position: this.$el.offset(),
 		});
 
-		this.listenTo(this.cardEditPopup, "cardTitleUpdated", function() {this.render();});
+		// model on change works here
+		//this.listenTo(this.cardEditPopup, "cardTitleUpdated", function() { console.log("event recevd at card view"); this.render()});
 	},
+
+
+
 	processUpdate: function() {
 		 console.log("!"); this.render()
 	},

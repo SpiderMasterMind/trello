@@ -11,36 +11,35 @@ var Board = Backbone.View.extend({
 			this.renderAllLists(); // now can just re order the collection to change the list
 	},
 	bindEvents: function() {
-		this.collection.on("destroy", this.render.bind(this));
+		this.listenTo(App, "deleteList", function(listId) { this.deleteList(listId) } );
 		this.listenTo(App, "renderLists", this.render);		
+		this.on("changeOrder", function(oldPosition, newPosition) { this.changeListPosition(oldPosition, newPosition) }.bind(this));
 	},
 	events: {
 		"click #test_add_list": "createList",
 	},
+	changeListPosition: function(oldPos, newPos) {
+		console.log(String(oldPos), newPos)
+	},
 	renderAllLists: function() {
-		if (this.lists) {
-			this.lists.forEach(function(list) { list.undelegateEvents(); } )
+		if (this.listViews) {
+			this.listViews.forEach(function(list) { list.undelegateEvents(); } )
 		}
 
 		$("#lists_area").empty();		
-		this.lists = this.collection.map(function(list) { // this.lists is an array of list el, which can be reordered as needed
+		this.listViews = this.collection.map(function(list, index) { // this.lists is an array of list el, which can be reordered as needed
 			var item = new ListView({
-				model: list
+				model: list,
+				order: index
 			});
 			return item;
 		});
 
-		this.lists.forEach(function(listView) {
+		this.listViews.forEach(function(listView) {
 			$("#lists_area").append(listView.el);
 		});
 
 		$("#lists_area").append(this.addListTemplate({}));
-
-
-		this.lists.forEach(function(listView) { listView.trigger("renderCardViews"); }); // tells list to render its cards so DOM is ready });
-
-		// individual card render after list render
-		//this.lists.forEach(function(listView) { listView.renderCards() } )
 	},
 	createList: function(event) {
 		event.preventDefault();
@@ -51,5 +50,11 @@ var Board = Backbone.View.extend({
 		}, {
 			success: this.render.bind(this)
 		});
-	}, 
+	},
+	deleteList: function(listId) {
+		console.log(listId);
+	//	debugger;
+//		var list = _.find(this.collection.models, function(model) {return model.get("listId") ===  listId});
+		this.collection.get(listId).destroy({ success: this.render.bind(this) });
+	},
 });

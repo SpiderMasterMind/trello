@@ -7,7 +7,13 @@ var CardModalView = Backbone.View.extend({
 	},
 	render: function() {
 		this.$el.html(this.template({
-	
+			label: this.model.get("label"),
+			listName: this.model.collection.heading,	
+			description: this.model.get("description"),
+			comments: this.model.get("comments"),
+			colors: this.model.get("colors"),
+			subscribed: this.model.get("subscribed"),
+
 		}));
 		$("body").append(this.el);
 	},

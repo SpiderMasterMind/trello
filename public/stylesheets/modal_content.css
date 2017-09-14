@@ -1,1 +1,54 @@
 @import url("whitespace_reset.css");
+
+.card_main_modal_layer {
+	z-index: 5;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0,0,0,0.5);
+}
+
+.card_main_modal {
+	z-index: 10;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -58%);
+	width: 700px;
+	height: 604px;
+	background-color: rgb(237,239,240);
+}
+
+.card_main_modal {
+	overflow: hidden;
+}
+
+.modal_heading {
+	padding: 15px 0;
+	width: 100%;
+}
+
+.modal_main {
+	padding: 8px 12px 12px 12px;
+	width: 508px;
+}
+
+.modal_sidebar {
+	box-sizing: border-box;
+	float: right;
+	width: 152px;
+	height: 519px;
+	padding: 8px 12px 12px 0;
+}
+
+.modal_sidebar a {
+	display: block;
+}
+	
+
+.modal_heading p,
+.modal_card_subscribed {
+	display: inline-block;
+}

@@ -1,9 +1,42 @@
 <div class="card_main_modal">
 	<div class="modal_heading">
-		<textarea class="modal_card_title"></textarea>
-		<p>in list<a href="#"></a></p>
+		<textarea class="modal_card_title">{{label}}</textarea>
+		<p>in list</p><a href="#">{{listName}}</a>
+		{{#if subscribed}}
+			<div class="modal_card_subscribed"><img src="images/card_subscribe.png" /></div>
+		{{/if}}
+	</div>
+	<div class="modal_sidebar">
+		<div class="add_ctrls">
+			<h3>Add</h3>
+			<a href="#"><span>Labels</span></a>
+			<a href="#"><span>Due Date</span></a>
+		</div>
+		<div class="actions_ctrls">
+			<h3>Actions</h3>
+			<a href="#"><span>Move</span></a>
+			<a href="#"><span>Copy</span></a>
+			<a href="#"><span>Subscribe</span></a>
+			<a href="#"><span>Archive</span></a>
+		</div>
 	</div>
 	<div class="modal_main">
+		{{#if colors}}
+		<h3>Labels</h4>
+		<div class="modal_labels">
+			{{#each colors}}
+			<span class="label_sq_color" style="background-color:{{color}};"></span>
+			{{/each}}
+			<a href="#" class="add_color"><img src="" alt="add_icon" /></a>
+		</div>
+		{{/if}}
+
+		{{#if due}}
+			<div class="modal_date">
+				<h3>Due Date</h3>
+				<span>{{due}}</span>
+			</div>
+		{{/if}}
 		<div class="add_description">
 			<div class="description_icon"><img src="" alt="desc_icon" /></div>
 			<a href="#">Edit the description...</a>
@@ -11,7 +44,7 @@
 			<a class="cancel_card_add" href="#">X</a>
 		</div>
 		<div class="input_description">
-			<textarea></textarea>
+			<textarea>{{description}}</textarea>
 		</div>
 		<div class="edit_description">
 			<h3>Description</h3>
@@ -25,29 +58,19 @@
 		</div>
 		<div class="activity_area">
 			<h3>Activity</h3>
+			{{#if comments}}
 			<div class="comments_display_area">
 			{{#each comments}}
 				<h4>User</h4>
 				<div class="comment_box">
-					<p>Comment goes here</p>
+					<p>{{this}}</p>
 				</div>
 				<div class="comment_sub_text">
 					<p class="comment_detail>Date at Time - <a href="#">Edit</a> - <a href="#">Delete</a></p>
 				</div>
 			{{/each}}
 			</div>
-		</div>
-	</div>
-	<div class="modal_sidebar">
-		<div class="add_ctrls">
-			<a href="#"><span>Members</span></a>
-			<a href="#"><span>Labels</span></a>
-		</div>
-		<div class="actions_ctrls">
-			<a href="#"><span>Move</span></a>
-			<a href="#"><span>Copy</span></a>
-			<a href="#"><span>Subscribe</span></a>
-			<a href="#"><span>Archive</span></a>
+			{{/if}}
 		</div>
 	</div>
 </div>

@@ -54,9 +54,11 @@ module.exports = {
 	},
 	getNewCardId: function(listId) {
 		var allLists = this.getLists();
-		var list = _.find(allLists, {listId: Number(listId)})
+		var list = _.find(allLists, {listId: Number(listId)});
+		console.log(list);
 		var result = _.max(list.cards, function(card){ return card.cardId; }).cardId + 1;
-		if (result === null) { return 0 } else { return result };
+		console.log("max result num", result);		
+		if (result === NaN) { return 0 } else { return result };
 	},
 	createCard: function(listId, cardJSON) {
 		var allData = this.get();
@@ -66,11 +68,26 @@ module.exports = {
 		var index = allLists.indexOf(list);
 		allLists[index] = list;
 		allData[0].data = allLists
-		console.log(allLists[index]);
+		console.log("createCard", allLists[index]);
 		this.save(allData[0]);
 	},
-	editCard: function() {
+	editCard: function(listId, cardId, json) {
+		var allData = this.get();		
+		var allLists = this.getLists();
+		var list = _.find(allLists, { listId: Number(listId) });
+		var index = allLists.indexOf(list);
 
+		var card = _.find(list.cards, { cardId: Number(cardId) });
+		var cardIndex = list.cards.indexOf(card);
+		var property = Object.keys(json)[0];
+		var value = json[property];
+		card[property] = value;
+		
+
+		list.cards[cardIndex] = card;
+		allLists[index] = list;
+		allData[0].data = allLists;
+		this.save(allData[0]);
 	},
 	save: function(json) {
 		fs.writeFileSync(filePath, JSON.stringify([json]), 'utf8')

@@ -42,15 +42,15 @@ var CardEditPopupView = Backbone.View.extend({
 		event.preventDefault();
 		var newTitle = this.$("textarea").val();
 		this.model.save({
-			heading: newTitle
+			label: newTitle
 		},{
 			patch: true,
 		});
 		this.renderParentView();		
 	},
 	renderParentView: function() {
-		this.trigger("cardTitleUpdated");
 		this.closeThis();
+		this.trigger("cardTitleUpdated");
 	},
 	setModalStyleOverrides: function() {
 		if (this.iconsRequired() && this.attrs.colors) {
@@ -64,8 +64,19 @@ var CardEditPopupView = Backbone.View.extend({
 		}
 	},
 	iconsRequired: function() {
-		if (!!this.attrs.description || this.attrs.subscribed || this.attrs.due.length > 0 || this.getCommentsNumber()) {
+		if (!!this.attrs.description || this.attrs.subscribed || this.dueDatePresent() || this.getCommentsNumber()) {
 			return true;
+		}
+	},
+	dueDatePresent: function() {
+		if (this.attrs.due) {
+			if (this.attrs.due.length > 0) {
+				return true;
+			} else { 
+				return false;
+			}
+		} else {
+			return false;
 		}
 	},
 	getCommentsNumber: function() {
