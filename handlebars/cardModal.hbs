@@ -1,10 +1,12 @@
 <div class="card_main_modal">
 	<div class="modal_heading">
 		<textarea class="modal_card_title">{{label}}</textarea>
-		<p>in list</p><a href="#">{{listName}}</a>
-		{{#if subscribed}}
-			<div class="modal_card_subscribed"><img src="images/card_subscribe.png" /></div>
-		{{/if}}
+		<div class="info">
+			<p>in list </p><a href="#">{{listName}}</a>
+			{{#if subscribed}}
+				<div class="modal_card_subscribed"><img src="images/card_subscribe.png" /></div>
+			{{/if}}
+		</div>
 	</div>
 	<div class="modal_sidebar">
 		<div class="add_ctrls">
@@ -16,12 +18,12 @@
 			<h3>Actions</h3>
 			<a href="#"><span>Move</span></a>
 			<a href="#"><span>Copy</span></a>
-			<a href="#"><span>Subscribe</span></a>
-			<a href="#"><span>Archive</span></a>
+			<a href="#" id="sidebar_subscribe"><span>Subscribe</span></a>
+			<a href="#" id="sidebar_archive"><span>Archive</span></a>
 		</div>
 	</div>
 	<div class="modal_main">
-		{{#if colors}}
+		<!--{{#if colors}}
 		<h3>Labels</h4>
 		<div class="modal_labels">
 			{{#each colors}}
@@ -29,7 +31,7 @@
 			{{/each}}
 			<a href="#" class="add_color"><img src="" alt="add_icon" /></a>
 		</div>
-		{{/if}}
+		{{/if}}-->
 
 		{{#if due}}
 			<div class="modal_date">
@@ -37,37 +39,45 @@
 				<span>{{due}}</span>
 			</div>
 		{{/if}}
-		<div class="add_description">
-			<div class="description_icon"><img src="" alt="desc_icon" /></div>
-			<a href="#">Edit the description...</a>
+
+		{{#if description}}
+		<div class="content_description">
+			<p>Description</p><a href="#" class="edit_description">Edit</a>
+			<p class="edit_description">{{description}}</p>
+		</div>
+		{{else}}
+			<div class="add_description">
+				<!--<div class="description_icon"><img src="images/card_description.png" alt="desc_icon" /></div>-->
+				<a href="#" class="edit_description">Edit the description...</a>
+			</div>
+		{{/if}}
+		<div class="input_description" style="">	
+			<textarea>{{description}}</textarea>
 			<input type="submit" value="Save" />	
 			<a class="cancel_card_add" href="#">X</a>
 		</div>
-		<div class="input_description">
-			<textarea>{{description}}</textarea>
-		</div>
-		<div class="edit_description">
-			<h3>Description</h3>
-			<a href="#">Edit</a>
-			<p class="description_text"></p>
-		</div>
 		<div class="add_comment_area">
 			<h3>Add Comment</h3>
-			<textarea></textarea>
-			<input type="submit" value="Save" class="comment_save"/>
+			<textarea placeholder="Write a comment..."></textarea>
+			<input type="submit" value="Save" id="comment_save"/>
 		</div>
 		<div class="activity_area">
 			<h3>Activity</h3>
 			{{#if comments}}
 			<div class="comments_display_area">
 			{{#each comments}}
-				<h4>User</h4>
 				<div class="comment_box">
 					<p>{{this}}</p>
 				</div>
-				<div class="comment_sub_text">
-					<p class="comment_detail>Date at Time - <a href="#">Edit</a> - <a href="#">Delete</a></p>
+				<div class="edit_comment_box">
+					<textarea>{{this}}</textarea>
+					<input type="submit" id="submit_edit_comment" value="Save" />
+					<a class="cancel_comment_add" href="#">X</a>			
 				</div>
+				<div class="comment_sub_text">
+					<a href="#" class="edit_comment">Edit</a> - <a href="#" class="delete_comment">Delete</a></p>
+				</div>
+				<hr>
 			{{/each}}
 			</div>
 			{{/if}}

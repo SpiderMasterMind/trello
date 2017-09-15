@@ -7,6 +7,14 @@ var data = require(path.resolve(path.dirname(__dirname), 'modules/board'));
 
 
 module.exports = function(router) {
+	router.put('/lists', function(req, res, next) {
+		console.log(req.body)
+		data.saveAllLists(req.body);
+		res.status(204).end();
+
+	});
+
+
 	router.post('/lists', function(req, res, next) {
 
 		var heading = req.body;

@@ -16,7 +16,6 @@ var ListActionsView = Backbone.View.extend({
 		"click #archive_list": "deleteList",
 		"mouseout li": "removeHighlightItemStyle",
 		"click input[type=submit]": "moveList",
-		
 	},
 	render: function() {
 		this.$el.html(this.template({
@@ -64,7 +63,7 @@ var ListActionsView = Backbone.View.extend({
 	positionPopup: function() {
 		this.$el.css({
 			"top": this.position.top + 38,
-			"left": this.position.left + 240,
+			"left": this.getHorizontalOffset(),
 		});
 	},
 	closeThis: function(event) {
@@ -78,6 +77,13 @@ var ListActionsView = Backbone.View.extend({
 	removeHighlightItemStyle: function() {
 	//	$(event.target).find("a").css("color", "black");:w
 		//
+	},
+	getHorizontalOffset: function() {
+		if ($("body").scrollLeft() > 0) {
+			return this.position.left - $("body").scrollLeft() + 240;
+		} else {
+			return this.position.left + 240;
+		}
 	},
 
 });

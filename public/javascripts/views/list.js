@@ -4,7 +4,7 @@
 // // possible refctor
 var ListView = Backbone.View.extend({
 	template: App.templates.list,
-	className: 'list',
+	className: 'list draggable',
 	initialize: function(options) {
 		this.order = options.order;
 		this.el.id = this.model.get("listId");

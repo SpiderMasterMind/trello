@@ -16,6 +16,11 @@ module.exports = {
 	lastId: function() {
 		return this.get()[0].lastID;
 	},
+	saveAllLists: function(json) {
+		var allData = this.get();
+		allData[0].data = json;
+		this.save(allData[0]);
+	},
 	appendList: function(list) {
 		var allData = this.get();
 		var lists = this.getLists();
@@ -85,6 +90,20 @@ module.exports = {
 		
 
 		list.cards[cardIndex] = card;
+		allLists[index] = list;
+		allData[0].data = allLists;
+		this.save(allData[0]);
+	},
+	deleteCard: function(listId, cardId) {
+		var allData = this.get();
+		var allLists = this.getLists();
+		var list = _.find(allLists, { listId: Number(listId) });
+		var index = allLists.indexOf(list);
+
+		var card = _.find(list.cards, { cardId: Number(cardId) });
+		var cardIndex = list.cards.indexOf(card);		
+
+		list.cards.splice(cardIndex, 1);
 		allLists[index] = list;
 		allData[0].data = allLists;
 		this.save(allData[0]);

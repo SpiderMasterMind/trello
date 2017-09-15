@@ -107,7 +107,7 @@ this["JST"]["cardEditPopup"] = Handlebars.template({"1":function(container,depth
 },"useData":true});
 
 this["JST"]["cardModal"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
-    return "			<div class=\"modal_card_subscribed\"><img src=\"images/card_subscribe.png\" /></div>		";
+    return "				<div class=\"modal_card_subscribed\"><img src=\"images/card_subscribe.png\" /></div>			";
 },"3":function(container,depth0,helpers,partials,data) {
     var stack1;
 
@@ -127,32 +127,46 @@ this["JST"]["cardModal"] = Handlebars.template({"1":function(container,depth0,he
     + container.escapeExpression(((helper = (helper = helpers.due || (depth0 != null ? depth0.due : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : (container.nullContext || {}),{"name":"due","hash":{},"data":data}) : helper)))
     + "</span>			</div>		";
 },"8":function(container,depth0,helpers,partials,data) {
+    var helper;
+
+  return "		<div class=\"content_description\">			<p>Description</p><a href=\"#\" class=\"edit_description\">Edit</a>			<p class=\"edit_description\">"
+    + container.escapeExpression(((helper = (helper = helpers.description || (depth0 != null ? depth0.description : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : (container.nullContext || {}),{"name":"description","hash":{},"data":data}) : helper)))
+    + "</p>		</div>		";
+},"10":function(container,depth0,helpers,partials,data) {
+    return "			<div class=\"add_description\">				<!--<div class=\"description_icon\"><img src=\"images/card_description.png\" alt=\"desc_icon\" /></div>-->				<a href=\"#\" class=\"edit_description\">Edit the description...</a>			</div>		";
+},"12":function(container,depth0,helpers,partials,data) {
     var stack1;
 
   return "			<div class=\"comments_display_area\">			"
-    + ((stack1 = helpers.each.call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? depth0.comments : depth0),{"name":"each","hash":{},"fn":container.program(9, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers.each.call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? depth0.comments : depth0),{"name":"each","hash":{},"fn":container.program(13, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "			</div>			";
-},"9":function(container,depth0,helpers,partials,data) {
-    return "				<h4>User</h4>				<div class=\"comment_box\">					<p>"
-    + container.escapeExpression(container.lambda(depth0, depth0))
-    + "</p>				</div>				<div class=\"comment_sub_text\">					<p class=\"comment_detail>Date at Time - <a href=\"#\">Edit</a> - <a href=\"#\">Delete</a></p>				</div>			";
+},"13":function(container,depth0,helpers,partials,data) {
+    var alias1=container.lambda, alias2=container.escapeExpression;
+
+  return "				<div class=\"comment_box\">					<p>"
+    + alias2(alias1(depth0, depth0))
+    + "</p>				</div>				<div class=\"edit_comment_box\">					<textarea>"
+    + alias2(alias1(depth0, depth0))
+    + "</textarea>					<input type=\"submit\" id=\"submit_edit_comment\" value=\"Save\" />					<a class=\"cancel_comment_add\" href=\"#\">X</a>							</div>				<div class=\"comment_sub_text\">					<a href=\"#\" class=\"edit_comment\">Edit</a> - <a href=\"#\" class=\"delete_comment\">Delete</a></p>				</div>				<hr>			";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
   return "<div class=\"card_main_modal\">	<div class=\"modal_heading\">		<textarea class=\"modal_card_title\">"
     + alias4(((helper = (helper = helpers.label || (depth0 != null ? depth0.label : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"label","hash":{},"data":data}) : helper)))
-    + "</textarea>		<p>in list</p><a href=\"#\">"
+    + "</textarea>		<div class=\"info\">			<p>in list </p><a href=\"#\">"
     + alias4(((helper = (helper = helpers.listName || (depth0 != null ? depth0.listName : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"listName","hash":{},"data":data}) : helper)))
-    + "</a>		"
+    + "</a>			"
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.subscribed : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "	</div>	<div class=\"modal_sidebar\">		<div class=\"add_ctrls\">			<h3>Add</h3>			<a href=\"#\"><span>Labels</span></a>			<a href=\"#\"><span>Due Date</span></a>		</div>		<div class=\"actions_ctrls\">			<h3>Actions</h3>			<a href=\"#\"><span>Move</span></a>			<a href=\"#\"><span>Copy</span></a>			<a href=\"#\"><span>Subscribe</span></a>			<a href=\"#\"><span>Archive</span></a>		</div>	</div>	<div class=\"modal_main\">		"
+    + "		</div>	</div>	<div class=\"modal_sidebar\">		<div class=\"add_ctrls\">			<h3>Add</h3>			<a href=\"#\"><span>Labels</span></a>			<a href=\"#\"><span>Due Date</span></a>		</div>		<div class=\"actions_ctrls\">			<h3>Actions</h3>			<a href=\"#\"><span>Move</span></a>			<a href=\"#\"><span>Copy</span></a>			<a href=\"#\" id=\"sidebar_subscribe\"><span>Subscribe</span></a>			<a href=\"#\" id=\"sidebar_archive\"><span>Archive</span></a>		</div>	</div>	<div class=\"modal_main\">		<!--"
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.colors : depth0),{"name":"if","hash":{},"fn":container.program(3, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "		"
+    + "-->		"
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.due : depth0),{"name":"if","hash":{},"fn":container.program(6, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "		<div class=\"add_description\">			<div class=\"description_icon\"><img src=\"\" alt=\"desc_icon\" /></div>			<a href=\"#\">Edit the description...</a>			<input type=\"submit\" value=\"Save\" />				<a class=\"cancel_card_add\" href=\"#\">X</a>		</div>		<div class=\"input_description\">			<textarea>"
+    + "		"
+    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.description : depth0),{"name":"if","hash":{},"fn":container.program(8, data, 0),"inverse":container.program(10, data, 0),"data":data})) != null ? stack1 : "")
+    + "		<div class=\"input_description\" style=\"\">				<textarea>"
     + alias4(((helper = (helper = helpers.description || (depth0 != null ? depth0.description : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"description","hash":{},"data":data}) : helper)))
-    + "</textarea>		</div>		<div class=\"edit_description\">			<h3>Description</h3>			<a href=\"#\">Edit</a>			<p class=\"description_text\"></p>		</div>		<div class=\"add_comment_area\">			<h3>Add Comment</h3>			<textarea></textarea>			<input type=\"submit\" value=\"Save\" class=\"comment_save\"/>		</div>		<div class=\"activity_area\">			<h3>Activity</h3>			"
-    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.comments : depth0),{"name":"if","hash":{},"fn":container.program(8, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "</textarea>			<input type=\"submit\" value=\"Save\" />				<a class=\"cancel_card_add\" href=\"#\">X</a>		</div>		<div class=\"add_comment_area\">			<h3>Add Comment</h3>			<textarea placeholder=\"Write a comment...\"></textarea>			<input type=\"submit\" value=\"Save\" id=\"comment_save\"/>		</div>		<div class=\"activity_area\">			<h3>Activity</h3>			"
+    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.comments : depth0),{"name":"if","hash":{},"fn":container.program(12, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "		</div>	</div></div>";
 },"useData":true});
 

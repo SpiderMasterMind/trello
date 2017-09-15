@@ -37,6 +37,7 @@ var CardView = Backbone.View.extend({
 		this.cardModal = new CardModalView({
 			model: this.model
 		});
+	//	this.listenTo(this.cardModal, "renderModal", function() { this.trigger
 	},
 	setLabelStylesOverrides: function() {
 		if (!this.iconsRequired() && !this.attrs.colors) {

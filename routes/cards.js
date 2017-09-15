@@ -16,6 +16,13 @@ module.exports = function(router) {
 
 
 		res.status(204).end();
-	})
+	});
+
+	router.delete('/lists/:listId/cards/:cardId', function(req, res, next) {
+
+		data.deleteCard(req.params.listId, req.params.cardId);
+
+		res.status(200).end();
+	});
 
 }

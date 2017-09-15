@@ -1,6 +1,12 @@
 var App = {
 	templates: JST,
 	init: function() {
+		// had to manually trigger a model change event on array change:w
+		//
+		// i havel lernt not to get sidetracked into other things
+		// override vertical scroll enable rule on main modal for comments
+// remove dragula or interact including css
+		// // remove this code as well?
 		// check for backbone converntions, eg can we re render on change event
 		// list action horiz offset
 		// actions add card multiple times doesnt work
@@ -32,8 +38,17 @@ var App = {
 		_.extend(this, Backbone.Events);		
 		this.on("renderLists", this.renderBoard.bind(this));
 		this.on("removeListPopups", this.removeListPopups.bind(this));
+		this.on("saveBoard", this.saveBoard.bind(this));
 		// TODO what si this?
 		this.trigger("renderCardPopup");
+	},
+	saveBoard: function() {
+		$.ajax({
+			method: 'PUT',
+			url: '/lists',
+			data: JSON.stringify(this.lists),
+			contentType: 'application/json',
+		});
 	},
 	removeListPopups: function() {
 		if (this.board) {
@@ -81,3 +96,5 @@ Handlebars.registerHelper("optionsCounter", function(max, selected) {
 	}
 	return new Handlebars.SafeString(result);
 });
+
+

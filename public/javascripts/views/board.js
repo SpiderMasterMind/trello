@@ -20,6 +20,26 @@ var Board = Backbone.View.extend({
 	},
 	changeListPosition: function(oldPos, newPos) {
 		console.log(String(oldPos), newPos)
+		oldPos = oldPos - 1;
+		newPos = newPos - 1;
+
+		var selectedModel = this.collection.at(oldPos).toJSON();
+		var modelToSwapWith = this.collection.at(newPos).toJSON();
+		this.newCollection = this.collection;	
+		this.newCollection.at(newPos).set(selectedModel);
+		this.newCollection.at(oldPos).set(modelToSwapWith);
+		
+
+// there is no collection.save, so we can individually update lists - not viable coz we need to preserve the JSON order
+		// therefore we need to update teh entire JSON
+		// override sync or wrap this in a model to save
+		
+		this.collection = this.newCollection;
+		App.trigger("saveBoard");
+		//this.collection.sync("update")
+		App.trigger("removeListPopups");
+		this.render();
+
 	},
 	renderAllLists: function() {
 		if (this.listViews) {
