@@ -1,46 +1,16 @@
 var App = {
 	templates: JST,
 	init: function() {
-		// had to manually trigger a model change event on array change:w
-		//
-		// i havel lernt not to get sidetracked into other things
-		// override vertical scroll enable rule on main modal for comments
-// remove dragula or interact including css
-		// // remove this code as well?
-		// check for backbone converntions, eg can we re render on change event
-		// list action horiz offset
-		// actions add card multiple times doesnt work
-		// list action highlighting
-		// calculate list max list height
-		// make add card take up bottom of space (need window sizing info)
-		// use model.get (backbone setters and getters) wherever possible
-		// could reset the last ID if collection is empty?	
-		// something in a notification if server comms fails
-		// replace X button with image form site
-		// list heading focus/list heading the same validation
-		// vertical scrollbars in .list_area
-		// add card enter key for textarea
-		// keep window position on list edit
-		// refocus cursor on new card add popup after card add
-		// remove nodemon from final project?
-		// card popup resize submit button & save positioning if no colors of icons
-
 		this.renderHeader();
 		this.renderInfobar();
 		this.renderBoard();
-		//this.renderLists();
 		this.bindEvents();
-
-// Test modal area
-	//	this.board.lists[0].cardViews[0].$(".card_content").trigger("click")
 	},
 	bindEvents: function() {
 		_.extend(this, Backbone.Events);		
-		this.on("renderLists", this.renderBoard.bind(this));
+		this.on("renderLists", this.fetchThenRenderBoard.bind(this));
 		this.on("removeListPopups", this.removeListPopups.bind(this));
 		this.on("saveBoard", this.saveBoard.bind(this));
-		// TODO what si this?
-		this.trigger("renderCardPopup");
 	},
 	saveBoard: function() {
 		$.ajax({
@@ -48,6 +18,18 @@ var App = {
 			url: '/lists',
 			data: JSON.stringify(this.lists),
 			contentType: 'application/json',
+		});
+	},
+	fetchThenRenderBoard: function() {
+		console.log("fetching");
+		var self = this;
+		$.ajax({
+			methid: 'GET',
+			url: '/lists',
+			success: function(data) {
+				this.lists = new Lists(data);
+				this.renderBoard();
+			}.bind(self)
 		});
 	},
 	removeListPopups: function() {

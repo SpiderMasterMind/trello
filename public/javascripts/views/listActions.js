@@ -25,8 +25,6 @@ var ListActionsView = Backbone.View.extend({
 		$("body").append(this.el);
 		this.positionPopup();
 		this.$(".moving").hide();		
-		//this.setModalStyleOverrides();
-	
 	},
 	deleteList: function() {
 		App.trigger("deleteList", this.collection.listId);
@@ -39,13 +37,9 @@ var ListActionsView = Backbone.View.extend({
 	moveList: function(event) {
 		event.preventDefault();
 		var reqdPosition = this.$("select option:selected").text()
-	console.log(this.$("select option:selected").text())
-
 		if (this.order === reqdPosition) { return; }
 
 		App.board.trigger("changeOrder", this.order, reqdPosition);
-		
-		
 	},
 	addCardPopup: function(event) {
 		event.preventDefault();
@@ -70,13 +64,6 @@ var ListActionsView = Backbone.View.extend({
 		if (event) {event.preventDefault();}
 		this.undelegateEvents();
 		this.remove();
-	},
-	highlightItemStyle: function(event) {
-	//	$(event.target).find("a").addClass("white_anchor_text");
-	},
-	removeHighlightItemStyle: function() {
-	//	$(event.target).find("a").css("color", "black");:w
-		//
 	},
 	getHorizontalOffset: function() {
 		if ($("body").scrollLeft() > 0) {

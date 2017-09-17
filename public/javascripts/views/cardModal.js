@@ -4,6 +4,9 @@ var CardModalView = Backbone.View.extend({
 	initialize: function() {
 		this.render();
 		this.setupOutsideClickListener();
+		this.model.on("change", this.render.bind(this));
+		$("body").append(this.el);
+		this.hideDescriptionInput();		
 	},
 	events: {
 		"blur .modal_card_title": "updateCardTitle",
@@ -18,6 +21,9 @@ var CardModalView = Backbone.View.extend({
 		"click #submit_edit_comment": "updateComment",
 		"click #sidebar_subscribe": "toggleSubscribe",
 		"click #sidebar_archive": "deleteCard",
+		"click #calendar_popup": "renderCalendarView",
+		"click #sidebar_labels": "renderLabelPicker",
+		"click a.modal_labels": "renderLabelPicker",
 	},
 	render: function() {
 		this.$el.html(this.template({
@@ -27,15 +33,16 @@ var CardModalView = Backbone.View.extend({
 			comments: this.model.get("comments"),
 			colors: this.model.get("colors"),
 			subscribed: this.model.get("subscribed"),
+			due: this.model.get("due"),
 
 		}));
-		$("body").append(this.el);
-		this.hideDescriptionInput();
-		this.$(".edit_comment_box").hide();
 		if (this.model.get("subscribed")) {
 			this.$("#sidebar_subscribe").css("background-color", "green");
 			this.$("#sidebar_subscribe span").css("color", "white");
 		}
+
+		this.hideDescriptionInput();
+		this.$(".edit_comment_box").hide();
 	},
 	setupOutsideClickListener: function() {
 		$('html').on("click", function() {
@@ -48,10 +55,20 @@ var CardModalView = Backbone.View.extend({
 		this.undelegateEvents();
 		this.$el.remove();
 	},
+	renderLabelPicker: function(event) {
+		event.preventDefault(event);
+		event.stopPropagation();
+		this.labelPicker = new LabelPickerView({ model: this.model });
+	},
+	renderCalendarView: function(event) {
+		event.stopPropagation();
+		this.calendarView = new CalendarView({ model: this.model });
+	},
 	deleteCard: function() {
 		this.model.destroy();
-		App.trigger("renderLists");	
 		this.closeThis();
+		App.trigger("renderLists");	
+		
 	},
 	toggleSubscribe: function() {
 		this.model.save({
@@ -94,7 +111,7 @@ var CardModalView = Backbone.View.extend({
 	createComment: function(event) {
 		event.preventDefault();
 		var newComment = this.$(".add_comment_area textarea").val();
-		var comments = this.model.get("comments");
+		var comments = this.model.get("comments") || [];
 		comments.push(newComment);
 		this.model.save({
 			comments: comments,
@@ -138,17 +155,17 @@ var CardModalView = Backbone.View.extend({
 		$(".add_description").hide();
 	},
 	hideDescriptionInput: function() {
-		$(".add_description").show();		
 		$(".input_description").hide();
 		$(".content_description").show();
+		$(".add_description").show();		
 	},
 	itemsUpdated: function() {
-		console.log("!")
 		this.undelegateEvents();
 		this.render();
 		this.delegateEvents();
 	},
 	updateCardTitle: function(event) {
+		event.stopPropagation();
 		var newTitle = $(event.target).val();
 		this.model.save({
 			label: newTitle,

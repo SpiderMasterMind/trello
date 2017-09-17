@@ -25,10 +25,10 @@ module.exports = {
 		var allData = this.get();
 		var lists = this.getLists();
 		lists.push(list);
-		
 		allData[0].data = lists;
 		this.save(allData[0]);
 	},
+
 	incrementLastId: function() {
 		var board = this.get()[0];
 		board.lastID = Number(board.lastID) + 1;
@@ -59,11 +59,15 @@ module.exports = {
 	},
 	getNewCardId: function(listId) {
 		var allLists = this.getLists();
-		var list = _.find(allLists, {listId: Number(listId)});
-		console.log(list);
-		var result = _.max(list.cards, function(card){ return card.cardId; }).cardId + 1;
+		var list = _.find(allLists, { listId: Number(listId) });
+		var result = _.max(list.cards, function(card) { return card.cardId; }).cardId;
+		if (result === undefined) {
+			return 0;
+		} else {
+		 result = result + 1;
+		}
 		console.log("max result num", result);		
-		if (result === NaN) { return 0 } else { return result };
+		return result;
 	},
 	createCard: function(listId, cardJSON) {
 		var allData = this.get();
@@ -73,7 +77,6 @@ module.exports = {
 		var index = allLists.indexOf(list);
 		allLists[index] = list;
 		allData[0].data = allLists
-		console.log("createCard", allLists[index]);
 		this.save(allData[0]);
 	},
 	editCard: function(listId, cardId, json) {
@@ -81,7 +84,6 @@ module.exports = {
 		var allLists = this.getLists();
 		var list = _.find(allLists, { listId: Number(listId) });
 		var index = allLists.indexOf(list);
-
 		var card = _.find(list.cards, { cardId: Number(cardId) });
 		var cardIndex = list.cards.indexOf(card);
 		var property = Object.keys(json)[0];

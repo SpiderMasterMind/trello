@@ -6,9 +6,8 @@ var Board = Backbone.View.extend({
 		this.bindEvents();
 	},
 	render: function() {
-
-			this.$el.html(this.template({}));
-			this.renderAllLists(); // now can just re order the collection to change the list
+			this.$el.html(this.template());
+			this.renderAllLists();
 	},
 	bindEvents: function() {
 		this.listenTo(App, "deleteList", function(listId) { this.deleteList(listId) } );
@@ -17,29 +16,21 @@ var Board = Backbone.View.extend({
 	},
 	events: {
 		"click #test_add_list": "createList",
+		"click #add_list": "showAddListPopup",
+		"click .hide_add_popup": "hideAddListPopup"
 	},
 	changeListPosition: function(oldPos, newPos) {
-		console.log(String(oldPos), newPos)
 		oldPos = oldPos - 1;
 		newPos = newPos - 1;
-
 		var selectedModel = this.collection.at(oldPos).toJSON();
 		var modelToSwapWith = this.collection.at(newPos).toJSON();
 		this.newCollection = this.collection;	
 		this.newCollection.at(newPos).set(selectedModel);
 		this.newCollection.at(oldPos).set(modelToSwapWith);
-		
-
-// there is no collection.save, so we can individually update lists - not viable coz we need to preserve the JSON order
-		// therefore we need to update teh entire JSON
-		// override sync or wrap this in a model to save
-		
 		this.collection = this.newCollection;
 		App.trigger("saveBoard");
-		//this.collection.sync("update")
 		App.trigger("removeListPopups");
 		this.render();
-
 	},
 	renderAllLists: function() {
 		if (this.listViews) {
@@ -47,7 +38,7 @@ var Board = Backbone.View.extend({
 		}
 
 		$("#lists_area").empty();		
-		this.listViews = this.collection.map(function(list, index) { // this.lists is an array of list el, which can be reordered as needed
+		this.listViews = this.collection.map(function(list, index) { 
 			var item = new ListView({
 				model: list,
 				order: index
@@ -59,22 +50,34 @@ var Board = Backbone.View.extend({
 			$("#lists_area").append(listView.el);
 		});
 
-		$("#lists_area").append(this.addListTemplate({}));
+		$("#lists_area").append(this.addListTemplate());
 	},
 	createList: function(event) {
 		event.preventDefault();
-		var name = $("#test_add_list").prev().val(); // gets the textarea value of my input
+		var name = $("#test_add_list").prev().val();
 
 		this.collection.create({
 			heading: name
 		}, {
 			success: this.render.bind(this)
 		});
+
+		this.hideAddListPopup();
 	},
 	deleteList: function(listId) {
-		console.log(listId);
-	//	debugger;
-//		var list = _.find(this.collection.models, function(model) {return model.get("listId") ===  listId});
 		this.collection.get(listId).destroy({ success: this.render.bind(this) });
+	},
+	showAddListPopup: function() {
+		this.$(".add_list_popout").show();
+		this.$(".add_list_button").hide();
+		
+	},
+	hideAddListPopup: function(event) {
+		if (event) {
+			event.preventDefault(event);
+			event.stopPropagation(event);
+		}
+		$(".add_list_button").show();		
+		$(".add_list_popout").hide();
 	},
 });

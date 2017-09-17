@@ -5,11 +5,15 @@ this["JST"]["addCardPopup"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"ma
 },"useData":true});
 
 this["JST"]["addList"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<div id=\"add_list\">	<p>Add List:</p>	<input type=\"text\" name=\"new\" placeholder\"List name\" />	<input type=\"submit\" value=\"Submit\" id=\"test_add_list\" /></div>";
+    return "<div id=\"add_list\">	<div class=\"add_list_button\">		<p>Add a List...</p>	</div><div class=\"add_list_popout\">	<textarea placeholder=\"Add a List...\"></textarea>	<input type=\"submit\" value=\"Save\" id=\"test_add_list\" />	<a href=\"#\" class=\"hide_add_popup\">X</a></div></div>";
 },"useData":true});
 
 this["JST"]["board"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     return "<div id=\"lists_area\"></div>";
+},"useData":true});
+
+this["JST"]["calendar"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    return "<input type=\"submit\" value=\"Save\" /><a href=\"#\" id=\"close\"><span>Close</span></a>";
 },"useData":true});
 
 this["JST"]["card"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
@@ -19,9 +23,9 @@ this["JST"]["card"] = Handlebars.template({"1":function(container,depth0,helpers
     + ((stack1 = helpers.each.call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? depth0.colors : depth0),{"name":"each","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "		";
 },"2":function(container,depth0,helpers,partials,data) {
-    return "				--><div class=\"color_block\" style=\"background-color:"
+    return "				<div class=\"color_block\" style=\"background-color:"
     + container.escapeExpression(container.lambda(depth0, depth0))
-    + ";\"></div><!--			";
+    + ";\"></div>			";
 },"4":function(container,depth0,helpers,partials,data) {
     var stack1, alias1=depth0 != null ? depth0 : (container.nullContext || {});
 
@@ -53,9 +57,9 @@ this["JST"]["card"] = Handlebars.template({"1":function(container,depth0,helpers
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {});
 
-  return "<div class=\"card_content\" style=\"position:relative;\">	<div class=\"labels_area\"><!--		"
+  return "<div class=\"card_content\" style=\"position:relative;\">	<div class=\"labels_area\">		"
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.colors : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "	</div><!--	--><div class=\"title_area\">		<h4>"
+    + "	</div>	<div class=\"title_area\">		<h4>"
     + container.escapeExpression(((helper = (helper = helpers.label || (depth0 != null ? depth0.label : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"label","hash":{},"data":data}) : helper)))
     + "</h4>		<div class=\"pencil_box\"><img src=\"images/list_pencil.png\" alt=\"pencil_icon\" /></div>	</div>	"
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.icons : depth0),{"name":"if","hash":{},"fn":container.program(4, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
@@ -111,15 +115,13 @@ this["JST"]["cardModal"] = Handlebars.template({"1":function(container,depth0,he
 },"3":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return "		<h3>Labels</h4>		<div class=\"modal_labels\">			"
+  return "		<div class=\"modal_labels\">			<h3>Labels</h4>					"
     + ((stack1 = helpers.each.call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? depth0.colors : depth0),{"name":"each","hash":{},"fn":container.program(4, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "			<a href=\"#\" class=\"add_color\"><img src=\"\" alt=\"add_icon\" /></a>		</div>		";
+    + "			<!--<a href=\"#\" class=\"add_color\"><span>+</span></a>-->		</div>		";
 },"4":function(container,depth0,helpers,partials,data) {
-    var helper;
-
-  return "			<span class=\"label_sq_color\" style=\"background-color:"
-    + container.escapeExpression(((helper = (helper = helpers.color || (depth0 != null ? depth0.color : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : (container.nullContext || {}),{"name":"color","hash":{},"data":data}) : helper)))
-    + ";\"></span>			";
+    return "			<div class=\"label_sq_color\" style=\"background-color:"
+    + container.escapeExpression(container.lambda(depth0, depth0))
+    + ";\"></div>			";
 },"6":function(container,depth0,helpers,partials,data) {
     var helper;
 
@@ -157,9 +159,9 @@ this["JST"]["cardModal"] = Handlebars.template({"1":function(container,depth0,he
     + alias4(((helper = (helper = helpers.listName || (depth0 != null ? depth0.listName : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"listName","hash":{},"data":data}) : helper)))
     + "</a>			"
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.subscribed : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "		</div>	</div>	<div class=\"modal_sidebar\">		<div class=\"add_ctrls\">			<h3>Add</h3>			<a href=\"#\"><span>Labels</span></a>			<a href=\"#\"><span>Due Date</span></a>		</div>		<div class=\"actions_ctrls\">			<h3>Actions</h3>			<a href=\"#\"><span>Move</span></a>			<a href=\"#\"><span>Copy</span></a>			<a href=\"#\" id=\"sidebar_subscribe\"><span>Subscribe</span></a>			<a href=\"#\" id=\"sidebar_archive\"><span>Archive</span></a>		</div>	</div>	<div class=\"modal_main\">		<!--"
+    + "		</div>	</div>	<div class=\"modal_sidebar\">		<div class=\"add_ctrls\">			<h3>Add</h3>			<a href=\"#\" id=\"sidebar_labels\"><span>Labels</span></a>			<a href=\"#\" id=\"calendar_popup\"><span>Due Date</span></a>		</div>		<div class=\"actions_ctrls\">			<h3>Actions</h3>			<a href=\"#\"><span>Move</span></a>			<a href=\"#\"><span>Copy</span></a>			<a href=\"#\" id=\"sidebar_subscribe\"><span>Subscribe</span></a>			<a href=\"#\" id=\"sidebar_archive\"><span>Archive</span></a>		</div>	</div>	<div class=\"modal_main\">		"
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.colors : depth0),{"name":"if","hash":{},"fn":container.program(3, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "-->		"
+    + "		"
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.due : depth0),{"name":"if","hash":{},"fn":container.program(6, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "		"
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.description : depth0),{"name":"if","hash":{},"fn":container.program(8, data, 0),"inverse":container.program(10, data, 0),"data":data})) != null ? stack1 : "")
@@ -171,11 +173,15 @@ this["JST"]["cardModal"] = Handlebars.template({"1":function(container,depth0,he
 },"useData":true});
 
 this["JST"]["header"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<div class=\"header boards_button\">	<a href=\"#\">		<img src=\"images/header_boards.png\" alt=\"boards_icon\" />		<span id=\"board\">Boards</span>	</a></div><div class=\"header header_search\">	<input type=\"text\" autocomplete=\"off\" autocorrect=\"off\" spellcheck=\"false\" />	<!--<img src=\"images/header_search.png\" alt=\"header_search_icon\" />--></div><div class=\"header boards-ctrl\">	<a class=\"notif_button\" href=\"#\">		<img src=\"images/header_notif.png\" alt=\"notification_icon\" />	</a></div><div class=\"header header_logo\">	<img src=\"images/header_logo.png\" alt=\"trello_logo\" /></div>";
+    return "<div class=\"header boards_button\">	<a href=\"#\">		<img src=\"images/header_boards.png\" alt=\"boards_icon\" />		<span id=\"board\">Boards</span>	</a></div><div class=\"header boards-ctrl\">	<a class=\"notif_button\" href=\"#\">		<img src=\"images/header_notif.png\" alt=\"notification_icon\" />	</a></div><div class=\"header header_logo\">	<img src=\"images/header_logo.png\" alt=\"trello_logo\" /></div>";
 },"useData":true});
 
 this["JST"]["infobar"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<p>infobar test!</p>";
+    return "<p>User</p>";
+},"useData":true});
+
+this["JST"]["labelPicker"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    return "<div class=\"color\" id=\"#519839\" style=\"background-color:#519839;\"></div><!----><div class=\"color\" id=\"#D9B51C\" style=\"background-color:#D9B51C;\"></div><!----><div class=\"color\" id=\"#FFAB4A\" style=\"background-color:#FFAB4A;\"></div><!----><div class=\"color\" id=\"#EB5A46\" style=\"background-color:#EB5A46;\"></div><!----><div class=\"color\" id=\"#C377E0\" style=\"background-color:#C377E0;\"></div><!----><div class=\"color\" id=\"#0079BF\" style=\"background-color:#0079BF;\"></div><!----><a href=\"#\" id=\"close\">Close</a>";
 },"useData":true});
 
 this["JST"]["list"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {

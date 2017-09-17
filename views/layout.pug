@@ -4,15 +4,18 @@ html
 	head
 		title Application!
 		+stylesheet_link_tag("style")
+
 		+javascript_include_tag("vendor/all")
 		+javascript_include_tag("handlebars_templates")
 
 	block content
 
-	+javascript_include_tag("application", "draggable")
+	+javascript_include_tag("application")
 	+javascript_include_tag("models/board", "models/list", "models/card")
 	+javascript_include_tag("collections/lists", "collections/cards")
-	+javascript_include_tag("views/board", "views/list", "views/header", "views/infobar", "views/addCardPopup", "views/card", "views/cardEditPopup", "views/cardModal", "views/listActions")
+	+javascript_include_tag("views/board", "views/list", "views/header", "views/infobar", "views/addCardPopup", "views/card", "views/cardEditPopup", "views/cardModal", "views/listActions", "views/calendar", "views/labelPicker")
 	script(type="text/javascript").
 		App.lists = new Lists(!{JSON.stringify(allItems)});	
 		App.init();
+		var picker = new Pikaday({ field: $('#datepicker')[0] });
+		

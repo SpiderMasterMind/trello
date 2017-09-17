@@ -38,7 +38,7 @@
 .modal_heading {
 	padding: 15px 0;
 	width: 100%;
-	height: 90px;
+	height: 60px;
 	margin-left: 50px;
 }
 
@@ -111,6 +111,10 @@
 .content_description a,
 .content_description p {	
 	display: inline-block;
+}
+
+.content_description p {
+	color: rgb(176,178,180);
 }
 
 .input_description {
@@ -275,4 +279,113 @@
 hr {
 	  border-bottom: 1px solid rgb(236,238,240);
 }
+
+#datepicker {
+	background-color: white;
+	position: fixed;
+	z-index: 20;
+	top: 50%;
+	left: 50%;
+	transform: translate(40%, -54%);
+	border-radius: 3px;
+}
+
+#datepicker input {
+	position: relative;
+
+}
+#datepicker a {
+	position: relative;
+	left: 160px;
+	text-decoration: none;
+}
+
+#datepicker span {
+	font-size: 12px;
+	font-weight: 700;
+	color: rgb(77,77,77);
+}
+	
+.modal_date {
+	display: inline-block;
+	margin-left: 38px;
+	margin-bottom: 12px;
+}
+
+.modal_date span {
+	display: block;
+	margin: 7px 0;
+	font-size: 17px;
+	font-weight: 700;
+}
+
+.modal_labels {
+	margin: 0 0 12px 38px;
+	display: inline-block;
+}
+
+.modal_labels a {
+	text-decoration: none;
+}
+
+.modal_labels h3 {
+	margin-bottom: 5px;
+}
+
+.label_sq_color {
+	display: inline-block;
+	height: 18px;
+	width: 58px;
+}
+aaaa
+.add_color {
+	text-decoration: none;
+	border-radius: 2px;
+	padding: 3px;
+}
+
+.add_color:hover {
+	background-color: white;
+}
+
+.add_color span {
+	position: relative;
+	left: 0;
+	bottom: 6px;
+	font-size: 15px;
+}
+
+#label_picker {
+	border: 1px solid rgb(226,228,230);
+	background-color: white;
+	height: 220px;
+	width: 170px;
+	position: fixed;
+	top: 147px;
+	right: 10px;
+	z-index: 20;
+	border-radius: 3px;
+	clear: both;
+}
+
+#label_picker  a {
+	position: relative;
+	bottom: 3px;
+	left: 5px;
+	text-decoration: none;
+	font-size: 15px;	
+	margin: 0 auto;
+}
+
+.color {
+	box-sizing: border-box;
+	border-radius: 3px;
+	margin: 4px;
+	height: 30px;
+}
+
+.color:hover {
+	border: 2px dotted white;
+}
+
 

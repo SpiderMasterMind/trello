@@ -11,8 +11,8 @@
 	<div class="modal_sidebar">
 		<div class="add_ctrls">
 			<h3>Add</h3>
-			<a href="#"><span>Labels</span></a>
-			<a href="#"><span>Due Date</span></a>
+			<a href="#" id="sidebar_labels"><span>Labels</span></a>
+			<a href="#" id="calendar_popup"><span>Due Date</span></a>
 		</div>
 		<div class="actions_ctrls">
 			<h3>Actions</h3>
@@ -23,15 +23,15 @@
 		</div>
 	</div>
 	<div class="modal_main">
-		<!--{{#if colors}}
-		<h3>Labels</h4>
+		{{#if colors}}
 		<div class="modal_labels">
+			<h3>Labels</h4>		
 			{{#each colors}}
-			<span class="label_sq_color" style="background-color:{{color}};"></span>
+			<div class="label_sq_color" style="background-color:{{this}};"></div>
 			{{/each}}
-			<a href="#" class="add_color"><img src="" alt="add_icon" /></a>
+			<!--<a href="#" class="add_color"><span>+</span></a>-->
 		</div>
-		{{/if}}-->
+		{{/if}}
 
 		{{#if due}}
 			<div class="modal_date">

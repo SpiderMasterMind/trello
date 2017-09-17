@@ -2,23 +2,21 @@ var CardView = Backbone.View.extend({
 	className: 'card',
 	template: App.templates.card,
 	initialize: function() {
-		this.attrs = this.model.toJSON();		
+		this.model.set("id", this.model.attributes.cardId);
 		this.render();
 		this.model.on("change update", this.render.bind(this));
 	},
 	render: function() {
-		// do we need to set attrs here? not very backbone
-		this.attrs = this.model.toJSON();
 		if (this.cardEditPopup) { this.cardEditPopup.undelegateEvents(); }
 		
 		this.$el.html(this.template({
 			icons: this.iconsRequired(),
 			description: this.isDescriptionPresent(),
-			label: this.attrs.label,
-			subscribed: this.attrs.subscribed,
-			due: this.getDueDate(),
+			label: this.model.get("label"),
+			subscribed: this.model.get("subscribed"),
+			due: this.model.get("due"),
 			comments: this.getCommentsNumber(),
-			colors: this.attrs.colors,
+			colors: this.model.get("colors"),
 		}));
 		this.setLabelStylesOverrides();
 		
@@ -31,41 +29,35 @@ var CardView = Backbone.View.extend({
 		"click .card_content": "renderCardModal",
 	},
 	renderCardModal: function(event) {
-		event.stopPropagation();
 		if (this.cardModal) { this.cardModal.undelegateEvents(); }
-
 		this.cardModal = new CardModalView({
 			model: this.model
 		});
-	//	this.listenTo(this.cardModal, "renderModal", function() { this.trigger
 	},
 	setLabelStylesOverrides: function() {
-		if (!this.iconsRequired() && !this.attrs.colors) {
+		if (!this.iconsRequired() && !this.model.get("colors")) {
 			this.$(".pencil_box").css("bottom", "3px");
-		} else if (this.iconsRequired && !this.attrs.colors) {
+		} else if (this.iconsRequired && !this.model.get("colors")) {
 			this.$(".pencil_box").css("bottom", "31px");							
-		} else if (this.attrs.colors && !this.iconsRequired()) {
+		} else if (this.model.get("colors") && !this.iconsRequired()) {
 			this.$(".card_content").css("padding-top", "5px");
 			this.$(".pencil_box").css("bottom", "15px");				
-		} else if (this.attrs.colors && this.iconsRequired()) {
+		} else if (this.model.get("colors") && this.iconsRequired()) {
 			this.$(".card_content").css("padding-top", "3px");
 			this.$(".pencil_box").css("bottom", "41px");	
 		}
 	},
 	iconsRequired: function() {
-		if (this.isDescriptionPresent() || this.attrs.subscribed || this.getDueDate.length > 0 || this.getCommentsNumber()) {
+		if (this.isDescriptionPresent() || this.model.get("subscribed") || this.model.get("due") || this.getCommentsNumber()) {
 			return true;
 		}
 	},
 	isDescriptionPresent: function() {
-		return !!this.attrs.description;
-	},
-	getDueDate: function() {
-		return this.attrs.due;	
+		return !!this.model.get("description");
 	},
 	getCommentsNumber: function() {
-		if (this.attrs.comments && this.attrs.comments.length > 0) {
-			return this.attrs.comments.length;
+		if (this.model.get("comments") && this.model.get("comments").length > 0) {
+			return this.model.get("comments").length;
 		} else {
 			return false;
 		}
@@ -79,15 +71,12 @@ var CardView = Backbone.View.extend({
 			model: this.model,
 			position: this.$el.offset(),
 		});
-
-		// model on change works here
-		//this.listenTo(this.cardEditPopup, "cardTitleUpdated", function() { console.log("event recevd at card view"); this.render()});
 	},
 
 
 
 	processUpdate: function() {
-		 console.log("!"); this.render()
+		this.render();
 	},
 	showPencilIconClass: function() {
 		this.$(".pencil_box").css("display", "block");

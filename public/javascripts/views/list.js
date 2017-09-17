@@ -1,7 +1,3 @@
-// model is passed in here, and converted to a cards collection of sub models
-// therefore we cant listen for changes on the main model as we need to recompose the cards each time
-// we ought to be able to have a collection on the model, that is re rendered each time the model changes
-// // possible refctor
 var ListView = Backbone.View.extend({
 	template: App.templates.list,
 	className: 'list draggable',
@@ -20,11 +16,9 @@ var ListView = Backbone.View.extend({
 			subscribed: this.model.get("subscribed"),
 			order: this.order,
 		});
-
 		_.each(this.model.attributes.cards, function(card) { this.cards.add( new Card(card, {collection: this.cards})) }, this);
 	},
 	render: function() {
-		console.log("$");
 		if (this.addCardPopup) { this.addCardPopup.undelegateEvents() }
 		
 		this.renderList();
@@ -40,8 +34,6 @@ var ListView = Backbone.View.extend({
 		"mouseout .card_add_optns": "removeHighlightAddOptns",
 		"click .card_add": "renderAddCardPopup",
 		"click .list_extras": "renderListActionsPopup",
-
-		"click ul:contains('subscribed')": "toggleSubscribed",
 		"click a#delete": "deleteList",
 	},
 	renderListActionsPopup: function(event) {
@@ -80,16 +72,14 @@ var ListView = Backbone.View.extend({
 			event.preventDefault();
 		}
 
-		$(this.$el).off("click", ".card_add"); // temporarily unbinds this method as it prevents the textarea from working 
+		$(this.$el).off("click", ".card_add");  
 		this.addCardPopup = new AddCardPopup({
 			collection: this.cards,
 			el: this.$(".card_add"),
 		},{
-			listId: this.cards.listId,						// passing the listId, means we know which list to render on popup cancel or submission
+			listId: this.cards.listId,				
 		});
-		this.removeHighlightAddCard();  // prevents highlighting on initial popup mouseover
-
-		// this is needed at this level so we can call create, evidently need a mixture of custom events and change update etc events
+		this.removeHighlightAddCard();  
 		this.listenTo(this.addCardPopup, "cardAddSuccess", function(requiredString) { this.cardCreateSuccess(requiredString) });
 		this.listenTo(this.addCardPopup, "popupClosed", function() { this.popupClosed() });
 	},
@@ -100,7 +90,15 @@ var ListView = Backbone.View.extend({
 		this.delegateEvents();		
 	},
 	cardCreateSuccess:function(requiredString) {
-		this.cards.create({ label: requiredString })
+		this.cards.create({ 
+			label: requiredString,
+			cardId: this.cards.getNextCardId(),
+			subscribed: false,
+			description: "",
+			due: "",
+			comments: [],
+		}).bind(this);
+
 		this.stopListening();
 		this.undelegateEvents();
 		this.render();	
@@ -109,22 +107,19 @@ var ListView = Backbone.View.extend({
 	},
 
 	updateHeading: function(event) {
-		// TODO only update if its different?
-
 		var newHeading = $(event.target).val();
-
-		console.log("!");
 		this.model.save({
 			heading: newHeading,
 		},{
 			patch: true,
-			success: this.headingUpdateSuccess.bind(this, newHeading)
 		});
+		this.headingUpdateSuccess(newHeading);
 	},
 	headingUpdateSuccess: function(newHeading) {
 		this.cards.heading = newHeading;
-	//	this.model.trigger("change");
-		this.render();
+		//this.composeCardsCollection();
+		//this.render();
+		App.trigger("renderLists");
 	},
 	detectEnterKeyPress: function(event) {
 		if (event.keyCode === 13) {
@@ -137,9 +132,6 @@ var ListView = Backbone.View.extend({
 			this.$(".heading_text").blur();
 		}
 	},
-
-
-
 	removeHighlightAddCard: function(event) {
 		this.$(".card_add").css("background-color", "rgb(226, 228, 230)");
 		this.$(".card_add a span").css({
@@ -163,15 +155,4 @@ var ListView = Backbone.View.extend({
 	removeHighlightAddOptns: function() {
 		this.$(".card_add_optns span").css("color", "rgb(153,153,153)");
 	},
-//	toggleSubscribed: function(event) {
-//		event.preventDefault();
-//		var toggledState = !this.model.get("subscribed")
-//		this.model.save({
-//			subscribed: toggledState
-//		},{
-//				patch: true,
-//				wait: true,
-//				success: this.render.bind(this),
-//		});
-//	},
 });

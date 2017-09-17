@@ -31,6 +31,8 @@ var AddCardPopup = Backbone.View.extend({
 		event.preventDefault();
 		event.stopPropagation();
 		var newCardLabel = this.$('textarea').val();
+		if (!newCardLabel) { return; }
+
 		if (newCardLabel.length === 0) {
 			this.$("textarea").focus(); 
 		} else {
