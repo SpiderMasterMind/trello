@@ -1,7 +1,7 @@
 Trello clone app
 
-Clone or download this repository
-
+Installation:
+Clone or Download this repository
 npm start
 
- to begin
+
