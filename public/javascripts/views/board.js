@@ -58,10 +58,8 @@ var Board = Backbone.View.extend({
 
 		this.collection.create({
 			heading: name
-		}, {
-			success: this.render.bind(this)
 		});
-
+		this.render();
 		this.hideAddListPopup();
 	},
 	deleteList: function(listId) {

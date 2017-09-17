@@ -101,8 +101,9 @@ var ListView = Backbone.View.extend({
 
 		this.stopListening();
 		this.undelegateEvents();
-		this.render();	
-		this.delegateEvents();
+		//this.render();	
+		//this.delegateEvents();
+		App.trigger("renderLists");
 		this.renderAddCardPopup(event);
 	},
 
