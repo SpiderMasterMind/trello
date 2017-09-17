@@ -2,6 +2,6 @@ Trello clone app
 
 Clone or download this repository
 
-Then use:
+npm start
 
-npm start to begin
+ to begin
