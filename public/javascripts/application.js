@@ -21,7 +21,6 @@ var App = {
 		});
 	},
 	fetchThenRenderBoard: function() {
-		console.log("fetching");
 		var self = this;
 		$.ajax({
 			methid: 'GET',

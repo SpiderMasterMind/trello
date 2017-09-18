@@ -57,7 +57,8 @@ var Board = Backbone.View.extend({
 		var name = $("#test_add_list").prev().val();
 
 		this.collection.create({
-			heading: name
+			heading: name,
+			subscribed: false,
 		});
 		this.render();
 		this.hideAddListPopup();

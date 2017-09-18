@@ -1,6 +1,6 @@
 var ListView = Backbone.View.extend({
 	template: App.templates.list,
-	className: 'list draggable',
+	className: 'list',
 	initialize: function(options) {
 		this.order = options.order;
 		this.el.id = this.model.get("listId");
@@ -90,6 +90,7 @@ var ListView = Backbone.View.extend({
 		this.delegateEvents();		
 	},
 	cardCreateSuccess:function(requiredString) {
+		debugger;
 		this.cards.create({ 
 			label: requiredString,
 			cardId: this.cards.getNextCardId(),
@@ -99,11 +100,12 @@ var ListView = Backbone.View.extend({
 			comments: [],
 		}).bind(this);
 
+		App.trigger("renderLists");
+		
 		this.stopListening();
 		this.undelegateEvents();
-		//this.render();	
-		//this.delegateEvents();
-		App.trigger("renderLists");
+		this.render();	
+		this.delegateEvents();
 		this.renderAddCardPopup(event);
 	},
 
