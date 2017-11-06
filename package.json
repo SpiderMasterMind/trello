@@ -5,6 +5,10 @@
   "scripts": {
     "start": "node ./bin/www"
   },
+	"engines": {
+		"node": "6.10.0",
+		"npm": "3.10.10"
+	},
   "dependencies": {
     "body-parser": "~1.17.1",
     "cookie-parser": "~1.4.3",
@@ -17,7 +21,8 @@
     "nib": "^1.1.2",
     "pikaday": "^1.6.1",
     "serve-favicon": "~2.4.2",
-    "stylus": "^0.54.5"
+    "stylus": "^0.54.5",
+    "underscore": "1.8.3"
   },
   "devDependencies": {
     "grunt": "^1.0.1",
