@@ -65,7 +65,6 @@ var BoardView = Backbone.View.extend({
 	},
 	testIt: function(id) {
 		var name = $("#test_add_list").prev().val();		
-		console.log(id);
 		this.collection.create({
 			heading: name,
 			subscribed: false,
