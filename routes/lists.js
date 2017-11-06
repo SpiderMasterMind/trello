@@ -7,12 +7,19 @@ var data = require(path.resolve(path.dirname(__dirname), 'modules/board'));
 
 
 module.exports = function(router) {
+	router.get('/lastId', function(req, res, next) {
+		// probably isn't sending in the right format
+		var responseBody = {
+			"id": data.lastId()
+		};
+		res.send(responseBody);
+		res.status(200).end();
+	});
 	router.get('/lists', function(req, res, next) {
 		res.send(data.getLists());
 		res.status(200).end();
 	});
 	router.put('/lists', function(req, res, next) {
-		console.log(req.body)
 		data.saveAllLists(req.body);
 		res.status(204).end();
 	});

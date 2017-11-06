@@ -1,9 +1,10 @@
 var App = {
 	templates: JST,
 	init: function() {
+		this.lastId;
 		this.renderHeader();
 		this.renderInfobar();
-		this.renderBoard();
+		this.fetchThenRenderBoard();
 		this.bindEvents();
 	},
 	bindEvents: function() {
@@ -23,7 +24,7 @@ var App = {
 	fetchThenRenderBoard: function() {
 		var self = this;
 		$.ajax({
-			methid: 'GET',
+			method: 'GET',
 			url: '/lists',
 			success: function(data) {
 				this.lists = new Lists(data);
@@ -57,11 +58,23 @@ var App = {
 		});
 	},
 	renderBoard: function() {
+		var self = this;
+		
 		if (this.board) { this.board.undelegateEvents(); }
-
-		this.board = new Board({
+		
+		$.ajax({
+			method: 'GET',
+			url: '/lastId',
+			success: function(data) {
+				this.newBoard(data)
+			}.bind(self)
+		});
+	},
+	newBoard: function(id) {
+		this.board = new BoardView({
 			el: 'main',
 			collection: this.lists,
+			listId: id,
 		});
 	},
 }

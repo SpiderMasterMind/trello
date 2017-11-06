@@ -1,7 +1,8 @@
-var Board = Backbone.View.extend({
+var BoardView = Backbone.View.extend({
 	template: App.templates.board,
 	addListTemplate: App.templates.addList,
-	initialize: function() {
+	initialize: function(options) {
+		this.listId = options.listId;
 		this.render();
 		this.bindEvents();
 	},
@@ -53,12 +54,22 @@ var Board = Backbone.View.extend({
 		$("#lists_area").append(this.addListTemplate());
 	},
 	createList: function(event) {
-		event.preventDefault();
-		var name = $("#test_add_list").prev().val();
-
+		var self = this;
+		$.ajax({
+			method: 'GET',
+			url: '/lastId',
+			success: function(data) {
+				this.testIt(data.id);
+			}.bind(self)
+		});
+	},
+	testIt: function(id) {
+		var name = $("#test_add_list").prev().val();		
+		console.log(id);
 		this.collection.create({
 			heading: name,
 			subscribed: false,
+			listId: id,
 		});
 		this.render();
 		this.hideAddListPopup();

@@ -22,7 +22,6 @@ var ListView = Backbone.View.extend({
 		if (this.addCardPopup) { this.addCardPopup.undelegateEvents() }
 		
 		this.renderList();
-		this.renderCardViews();
 		return this;
 	},
 	events: {
@@ -56,6 +55,7 @@ var ListView = Backbone.View.extend({
 			heading: this.cards.heading,
 			subscribed: this.cards.subscribed,
 		}));
+		this.renderCardViews();
 	},
 	renderCardViews: function() {
 		this.cardViews = this.cards.map(function(card) { 
@@ -89,8 +89,7 @@ var ListView = Backbone.View.extend({
 		this.addCardPopup = undefined;		
 		this.delegateEvents();		
 	},
-	cardCreateSuccess:function(requiredString) {
-		debugger;
+	cardCreateSuccess:function (requiredString) {
 		this.cards.create({ 
 			label: requiredString,
 			cardId: this.cards.getNextCardId(),
@@ -98,15 +97,24 @@ var ListView = Backbone.View.extend({
 			description: "",
 			due: "",
 			comments: [],
-		}).bind(this);
-
-		App.trigger("renderLists");
-		
+		}, {
+			success: function() {
+				this.renderNewestCard();
+			}.bind(this)
+		});
+	},
+	renderNewestCard: function() {
 		this.stopListening();
 		this.undelegateEvents();
-		this.render();	
-		this.delegateEvents();
-		this.renderAddCardPopup(event);
+
+		var newCardId = this.cards.getNextCardId() - 1;
+		var newCardView = new CardView({
+				model: this.cards.get(newCardId), 
+		});
+		this.$(".cards_area").append(newCardView.el);
+		App.trigger("renderLists");
+		this.popupClosed();	
+		this.renderAddCardPopup();
 	},
 
 	updateHeading: function(event) {
@@ -120,8 +128,6 @@ var ListView = Backbone.View.extend({
 	},
 	headingUpdateSuccess: function(newHeading) {
 		this.cards.heading = newHeading;
-		//this.composeCardsCollection();
-		//this.render();
 		App.trigger("renderLists");
 	},
 	detectEnterKeyPress: function(event) {

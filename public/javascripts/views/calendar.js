@@ -3,7 +3,6 @@ var CalendarView = Backbone.View.extend({
 	id: "datepicker", 
 	initialize: function() {
 		this.render();
-		this.setUpOutsideClickListener();
 	},
 	render: function() {
 		this.picker = new Pikaday({
@@ -14,13 +13,6 @@ var CalendarView = Backbone.View.extend({
 		$("body").append(this.el);
 		this.$el.prepend(picker.el);
 		this.$el.append(this.template());
-	},
-	setUpOutsideClickListener: function() {
-		$('html').on("click", function() {
-			if (!$(event.target).closest(this.el).length) {
-				this.closeThis();
-			}
-		}.bind(this));
 	},
 	events: {
 		"click #close": "closeThis",
@@ -42,9 +34,9 @@ var CalendarView = Backbone.View.extend({
 		this.closeThis();
 	},
 	closeThis: function(event) {
+		this.model.trigger("change");		
 		this.el.remove();
 		this.undelegateEvents();
-		this.model.trigger("change");
 	},
 });
 		

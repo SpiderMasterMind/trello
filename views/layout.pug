@@ -15,7 +15,7 @@ html
 	+javascript_include_tag("collections/lists", "collections/cards")
 	+javascript_include_tag("views/board", "views/list", "views/header", "views/infobar", "views/addCardPopup", "views/card", "views/cardEditPopup", "views/cardModal", "views/listActions", "views/calendar", "views/labelPicker")
 	script(type="text/javascript").
-		App.lists = new Lists(!{JSON.stringify(allItems)});	
+		//App.lists = new Lists(!{JSON.stringify(allItems)});	
 		App.init();
 		var picker = new Pikaday({ field: $('#datepicker')[0] });
 		

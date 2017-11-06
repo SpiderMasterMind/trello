@@ -1,6 +1,5 @@
 var Board = Backbone.Model.extend({
-	initialize: function() {
-
+	initialize: function(options) {
 	},
 	url: "/lists/",
 });

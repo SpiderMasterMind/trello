@@ -56,11 +56,12 @@ var CardModalView = Backbone.View.extend({
 		this.$el.remove();
 	},
 	renderLabelPicker: function(event) {
-		event.preventDefault(event);
+		event.preventDefault();
 		event.stopPropagation();
 		this.labelPicker = new LabelPickerView({ model: this.model });
 	},
 	renderCalendarView: function(event) {
+		event.preventDefault();
 		event.stopPropagation();
 		this.calendarView = new CalendarView({ model: this.model });
 	},
@@ -68,7 +69,6 @@ var CardModalView = Backbone.View.extend({
 		this.model.destroy();
 		this.closeThis();
 		App.trigger("renderLists");	
-		
 	},
 	toggleSubscribe: function() {
 		this.model.save({
