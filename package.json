@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "node ./bin/www"
   },
   "dependencies": {
     "body-parser": "~1.17.1",
@@ -27,5 +27,18 @@
     "grunt-contrib-watch": "^1.0.0",
     "nodemon": "^1.11.0",
     "pug": "^2.0.0-rc.3"
-  }
+  },
+  "description": "Trello clone app Repo: https://github.com/SpiderMasterMind/trello",
+  "main": "Gruntfile.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SpiderMasterMind/trello.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SpiderMasterMind/trello/issues"
+  },
+  "homepage": "https://github.com/SpiderMasterMind/trello#readme"
 }
